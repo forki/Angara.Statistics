@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>qsummaryType - Angara.Statistics</title>
+    <title>Serialization - Angara.Statistics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content=""/>
     <meta name="author" content="Vassily Lyutsarev"/>
@@ -35,31 +35,57 @@
 
 
 
-<h1>qsummaryType</h1>
+<h1>Serialization</h1>
 <p>
   <span>Namespace: Angara</span><br />
-  <span>Parent Module: <a href="angara-statistics.html">Statistics</a></span>
+  <span>Parent Module: <a href="angara-filzbach.html">Filzbach</a></span>
 </p>
 <div class="xmldoc">
 </div>
-  <h3>Record Fields</h3>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="angara-filzbach-serialization-parametersserializer.html">ParametersSerializer</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="angara-filzbach-serialization-samplerserializer.html">SamplerSerializer</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
-            lb68
+          <code onmouseout="hideTip(event, '1', 1)" onmouseover="showTip(event, '1', 1)">
+            deserializeParameters is
           </code>
-          <div class="tip" id="104">
-            <strong>Signature:</strong> float<br />
+          <div class="tip" id="1">
+            <strong>Signature:</strong> is:InfoSet -&gt; Parameters<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L469-469" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -69,15 +95,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
-            lb95
+          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
+            deserializeSampler is
           </code>
-          <div class="tip" id="105">
-            <strong>Signature:</strong> float<br />
+          <div class="tip" id="2">
+            <strong>Signature:</strong> is:InfoSet -&gt; Sampler<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L508-508" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -87,15 +113,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
-            max
+          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
+            invalidInfoSet ()
           </code>
-          <div class="tip" id="106">
-            <strong>Signature:</strong> float<br />
-                      </div>
+          <div class="tip" id="3">
+            <strong>Signature:</strong> unit -&gt; &#39;?7375<br />
+                          <strong>Type parameters:</strong> '?7375          </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L449-449" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -105,15 +131,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
-            median
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
+            Register lib
           </code>
-          <div class="tip" id="107">
-            <strong>Signature:</strong> float<br />
+          <div class="tip" id="4">
+            <strong>Signature:</strong> lib:ISerializerLibrary -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L524-524" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -123,15 +149,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
-            min
+          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
+            serializeParameters p
           </code>
-          <div class="tip" id="108">
-            <strong>Signature:</strong> float<br />
+          <div class="tip" id="5">
+            <strong>Signature:</strong> p:Parameters -&gt; InfoSet<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L451-451" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -141,33 +167,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
-            ub68
+          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
+            serializeSampler s
           </code>
-          <div class="tip" id="109">
-            <strong>Signature:</strong> float<br />
+          <div class="tip" id="6">
+            <strong>Signature:</strong> s:Sampler -&gt; InfoSet<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
-            ub95
-          </code>
-          <div class="tip" id="110">
-            <strong>Signature:</strong> float<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Statistics.fs#L88-88" class="github-link">
+            <a href="http://github.com/microsoft/Angara.Statistics/tree/master/src/Angara.Statistics/Filzbach.fs#L504-504" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
