@@ -107,39 +107,89 @@ If this number is not a power of two he number of points will be the next larger
 <span class="l">8: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// estimate density curve in 16 points</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 34)" onmouseover="showTip(event, 'fs18', 34)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 35)" onmouseover="showTip(event, 'fs19', 35)" class="i">sampling_density_y</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 36)" onmouseover="showTip(event, 'fs20', 36)" class="f">kde</span> <span class="n">16</span> <span onmouseout="hideTip(event, 'fs16', 37)" onmouseover="showTip(event, 'fs16', 37)" class="i">samples</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 34)" onmouseover="showTip(event, 'fs18', 34)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 35)" onmouseover="showTip(event, 'fs19', 35)" class="i">sampling_density_y</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 36)" onmouseover="showTip(event, 'fs20', 36)" class="f">kde</span> <span class="n">128</span> <span onmouseout="hideTip(event, 'fs16', 37)" onmouseover="showTip(event, 'fs16', 37)" class="i">samples</span>
 <span class="c">// compute exact probability density function</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 38)" onmouseover="showTip(event, 'fs21', 38)" class="i">analytic_density_y</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs22', 39)" onmouseover="showTip(event, 'fs22', 39)" class="i">x</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs18', 40)" onmouseover="showTip(event, 'fs18', 40)" class="i">sampling_density_x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs23', 41)" onmouseover="showTip(event, 'fs23', 41)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs24', 42)" onmouseover="showTip(event, 'fs24', 42)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs3', 43)" onmouseover="showTip(event, 'fs3', 43)" class="i">distribution</span> <span onmouseout="hideTip(event, 'fs22', 44)" onmouseover="showTip(event, 'fs22', 44)" class="i">x</span>)|]
-<span class="c">// print the resulting table</span>
-<span onmouseout="hideTip(event, 'fs25', 45)" onmouseover="showTip(event, 'fs25', 45)" class="f">printfn</span> <span class="s">&quot;.   x   est.density exact.dnsty&quot;</span>
-<span onmouseout="hideTip(event, 'fs26', 46)" onmouseover="showTip(event, 'fs26', 46)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs27', 47)" onmouseover="showTip(event, 'fs27', 47)" class="f">zip3</span> <span onmouseout="hideTip(event, 'fs18', 48)" onmouseover="showTip(event, 'fs18', 48)" class="i">sampling_density_x</span> <span onmouseout="hideTip(event, 'fs19', 49)" onmouseover="showTip(event, 'fs19', 49)" class="i">sampling_density_y</span> <span onmouseout="hideTip(event, 'fs21', 50)" onmouseover="showTip(event, 'fs21', 50)" class="i">analytic_density_y</span>
-<span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs26', 51)" onmouseover="showTip(event, 'fs26', 51)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 52)" onmouseover="showTip(event, 'fs28', 52)" class="f">iter</span>(<span class="k">fun</span> (<span onmouseout="hideTip(event, 'fs22', 53)" onmouseover="showTip(event, 'fs22', 53)" class="i">x</span>, <span onmouseout="hideTip(event, 'fs29', 54)" onmouseover="showTip(event, 'fs29', 54)" class="i">y1</span>, <span onmouseout="hideTip(event, 'fs30', 55)" onmouseover="showTip(event, 'fs30', 55)" class="i">y2</span>) <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs25', 56)" onmouseover="showTip(event, 'fs25', 56)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%6.1f</span><span class="s"> </span><span class="pf">%11.5f</span><span class="s"> </span><span class="pf">%11.5f</span><span class="s">&quot;</span> <span onmouseout="hideTip(event, 'fs22', 57)" onmouseover="showTip(event, 'fs22', 57)" class="i">x</span> <span onmouseout="hideTip(event, 'fs29', 58)" onmouseover="showTip(event, 'fs29', 58)" class="i">y1</span> <span onmouseout="hideTip(event, 'fs30', 59)" onmouseover="showTip(event, 'fs30', 59)" class="i">y2</span>)
+
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 45)" onmouseover="showTip(event, 'fs1', 45)" class="i">Angara</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs25', 46)" onmouseover="showTip(event, 'fs25', 46)" class="i">Charting</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs26', 47)" onmouseover="showTip(event, 'fs26', 47)" class="i">chart</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs27', 48)" onmouseover="showTip(event, 'fs27', 48)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 49)" onmouseover="showTip(event, 'fs28', 49)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs29', 50)" onmouseover="showTip(event, 'fs29', 50)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 51)" onmouseover="showTip(event, 'fs30', 51)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 52)" onmouseover="showTip(event, 'fs18', 52)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs21', 53)" onmouseover="showTip(event, 'fs21', 53)" class="i">analytic_density_y</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
+                          <span onmouseout="hideTip(event, 'fs29', 54)" onmouseover="showTip(event, 'fs29', 54)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 55)" onmouseover="showTip(event, 'fs30', 55)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 56)" onmouseover="showTip(event, 'fs18', 56)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 57)" onmouseover="showTip(event, 'fs19', 57)" class="i">sampling_density_y</span>)]
 </code></pre></td>
 </tr>
 </table>
 <p>The output of the above script:</p>
-<table class="pre"><tr><td><pre><code>.   x   est.density exact.dnsty
-   3.2     0.00012     0.00004
-   7.9     0.00130     0.00023
-  12.5     0.00133     0.00109
-  17.2     0.01104     0.00391
-  21.8     0.00700     0.01069
-  26.5     0.03287     0.02236
-  31.1     0.02900     0.03582
-  35.8     0.04331     0.04392
-  40.4     0.04021     0.04121
-  45.1     0.01987     0.02960
-  49.7     0.02757     0.01627
-  54.4     0.00557     0.00685
-  59.1     0.00834     0.00220
-  63.7     0.00110     0.00054
-  68.4     0.00051     0.00010
-  73.0     0.00006     0.00001</code></pre></td></tr></table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_08fa254f96464637a290e36331903b17 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "XgUbbP6eCUCrPOBAvQQOQPy50go+NRFAo1U1dR1oE0BK8Zff/JoVQPCM+knczRdAlyhdtLsAGkA+xL8emzMcQORfIol6Zh5Axn3C+axMIECYy/OuHGYhQGwZJWSMfyJAQGdWGfyYI0AStYfOa7IkQOYCuYPbyyVAulDqOEvlJkCMnhvuuv4nQGDsTKMqGClANDp+WJoxKkAGiK8NCksrQNrV4MJ5ZCxAriMSeOl9LUCAcUMtWZcuQFS/dOLIsC9AlAbTSxxlMEB9rWsm1PEwQGdUBAGMfjFAUPuc20MLMkA6ojW2+5cyQCRJzpCzJDNADvBma2uxM0D3lv9FIz40QOE9mCDbyjRAy+Qw+5JXNUC0i8nVSuQ1QJ4yYrACcTZAiNn6irr9NkBxgJNlcoo3QFsnLEAqFzhARc7EGuKjOEAudV31mTA5QBgc9s9RvTlAAsOOqglKOkDraSeFwdY6QNUQwF95YztAv7dYOjHwO0CoXvEU6Xw8QJIFiu+gCT1AfKwiyliWPUBlU7ukECM+QE/6U3/Irz5AOKHsWYA8P0AiSIU0OMk/QIb3jgf4KkBA+krb9FNxQEBvnifir7dAQOTxc88L/kBAWUXAvGdEQUDOmAyqw4pBQEPsWJcf0UFAuD+lhHsXQkAtk/Fx111CQKHmPV8zpEJAFjqKTI/qQkCLjdY56zBDQADhIidHd0NAdTRvFKO9Q0Dph7sB/wNEQF7bB+9aSkRA0y5U3LaQREBIgqDJEtdEQL3V7LZuHUVAMik5pMpjRUCmfIWRJqpFQBvQ0X6C8EVAkCMebN42RkAFd2pZOn1GQHrKtkaWw0ZA7x0DNPIJR0BjcU8hTlBHQNjEmw6qlkdATRjo+wXdR0DCazTpYSNIQDe/gNa9aUhArBLNwxmwSEAgZhmxdfZIQJW5ZZ7RPElACg2yiy2DSUB/YP54iclJQPSzSmblD0pAaQeXU0FWSkDdWuNAnZxKQFKuLy754kpAxwF8G1UpS0A8VcgIsW9LQLGoFPYMtktAJvxg42j8S0CaT63QxEJMQA+j+b0giUxAhPZFq3zPTED5SZKY2BVNQG6d3oU0XE1A4vAqc5CiTUBXRHdg7OhNQMyXw01IL05AQesPO6R1TkC2PlwoALxOQCuSqBVcAk9An+X0ArhIT0AUOUHwE49PQImMjd1v1U9A/+9s5eUNUEC5GRPcEzFQQHRDudJBVFBALm1fyW93UEDolgXAnZpQQKPAq7bLvVBAXepRrfngUEAYFPijJwRRQNI9nppVJ1FAjWdEkYNKUUBHkeqHsW1RQAK7kH7fkFFAvOQ2dQ20UUB2Dt1rO9dRQDE4g2Jp+lFA62EpWZcdUkCmi89PxUBSQA==",
+        "y:double array": "kUbQ4XQjBD+bmfbwY0gJP+Esnzt5nw8/Tj6mTvCzEz8We57L6nUYP2FDz4IPQR4/ZHwnI+mjIj9rCmJ2RuImPzOJK5Eu/Ss/Im0ftIENMT/N53GjtbM0P4l1EKDfCTk/BBXCwrkrPj+uoTlxHRxCPyKXnEnfqEU/nq8fwRHPST8DYXvBbqNOP6IgGR0+HlI/6W2xQUJZVT8EQ3cXwg9ZP9QRyeWFT10/SToSDIUTYT/+vwICsdJjP/LuBmIJ7WY/zfOo33Jqaj82yy5P2VJuP0X9wygIV3E/VG8X5dfBcz/5yaEsdm12PyTlgRw2XXk/JV1xggyUfD/tyTTGOwqAPx4849cy8IE/JcRRI478gz//Jf05jy+GPzxmOncKiYg/MOwOr1sIiz8KcKcAXKyNP1HPLJSsOZA/pToUVoetkT/SbvCcUDCTP3qVdUNOwJQ/Jubo+3lblj/HXSckg/+XP5diUC7SqZk/N54kqY1Xmz+Xu8nooAWdPytGfEXEsJ4/hQkPbcMqoD8RCnDQLPigP8Tvc+DNvqE/1S+W6tN8oj814KD1cDCjP22BZvji16M//AYaIHtxpD9F+pD8pPukP4OS7GftdKU/GhiZ/wjcpT9MTk0G2i+mPxA4sIl1b6Y/tGJ4qieapj8DMRfrdq+mP5vTK28mr6Y/sMDaHDeZpj+PQIaY522mP+OJBBuzLaY/jdoOKk/ZpT/C7AFCqHGlP9695Ibd96Q/Sa7NmDttpD963/WsNtOjP1IU7xBkK6M/1shjQHN3oj8AHHq3JrmhP2UnW6xM8qA/yECI2bckoD+PRkEBcaSePx53QZQr+Zw/2Wo8RQ9Lmz9QoHpiYp2ZP8dIjPs385c/n6UermdPlj8dzjYJh7SUPzWu85DkJJM/hkrWYYSikT8RqDZoHi+QP/x8iC48mI0/Z7nlBUf1ij/0S1FzC3eIP5qL/mqsHoY/Kk7zcsrsgz/H8lLajeGBPxxWQSNk+X8/F/++kyN7fD8wlkMJZ0Z5P6bhhYqsWHY/uAiMNvyucz9udoGNAEZxPwFQqAU7NG4/WcDNAwxPaj9BvJVFn9RmP38m+r8IvWM/4JYOYWQAYT/6Zt7q4S1dP+udN4pN8lg/KExKD5Q/VT+8S5XJ8gdSP9aUoR3jfE4/zqn3U+OtST89Np6RbYxFP78M40vVA0I/4V1aw3ACPj/NNkDE6+Y4P0mLS2w9ljQ/WyDnA8P0MD+6Gg/dy9MrPxmz6cPOvyY/rmRtO1KHIj/zdOkp0xEePw52Y5MNTxg/6/ZpVReUEz9VlCvTfGsPPyqawIchHgk/cUFnuj0BBD8VmUSSMb//Ptxzpwe/GPk+A1HlawLE8z4JCok6qQTvPg=="
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "XgUbbP6eCUCrPOBAvQQOQPy50go+NRFAo1U1dR1oE0BK8Zff/JoVQPCM+knczRdAlyhdtLsAGkA+xL8emzMcQORfIol6Zh5Axn3C+axMIECYy/OuHGYhQGwZJWSMfyJAQGdWGfyYI0AStYfOa7IkQOYCuYPbyyVAulDqOEvlJkCMnhvuuv4nQGDsTKMqGClANDp+WJoxKkAGiK8NCksrQNrV4MJ5ZCxAriMSeOl9LUCAcUMtWZcuQFS/dOLIsC9AlAbTSxxlMEB9rWsm1PEwQGdUBAGMfjFAUPuc20MLMkA6ojW2+5cyQCRJzpCzJDNADvBma2uxM0D3lv9FIz40QOE9mCDbyjRAy+Qw+5JXNUC0i8nVSuQ1QJ4yYrACcTZAiNn6irr9NkBxgJNlcoo3QFsnLEAqFzhARc7EGuKjOEAudV31mTA5QBgc9s9RvTlAAsOOqglKOkDraSeFwdY6QNUQwF95YztAv7dYOjHwO0CoXvEU6Xw8QJIFiu+gCT1AfKwiyliWPUBlU7ukECM+QE/6U3/Irz5AOKHsWYA8P0AiSIU0OMk/QIb3jgf4KkBA+krb9FNxQEBvnifir7dAQOTxc88L/kBAWUXAvGdEQUDOmAyqw4pBQEPsWJcf0UFAuD+lhHsXQkAtk/Fx111CQKHmPV8zpEJAFjqKTI/qQkCLjdY56zBDQADhIidHd0NAdTRvFKO9Q0Dph7sB/wNEQF7bB+9aSkRA0y5U3LaQREBIgqDJEtdEQL3V7LZuHUVAMik5pMpjRUCmfIWRJqpFQBvQ0X6C8EVAkCMebN42RkAFd2pZOn1GQHrKtkaWw0ZA7x0DNPIJR0BjcU8hTlBHQNjEmw6qlkdATRjo+wXdR0DCazTpYSNIQDe/gNa9aUhArBLNwxmwSEAgZhmxdfZIQJW5ZZ7RPElACg2yiy2DSUB/YP54iclJQPSzSmblD0pAaQeXU0FWSkDdWuNAnZxKQFKuLy754kpAxwF8G1UpS0A8VcgIsW9LQLGoFPYMtktAJvxg42j8S0CaT63QxEJMQA+j+b0giUxAhPZFq3zPTED5SZKY2BVNQG6d3oU0XE1A4vAqc5CiTUBXRHdg7OhNQMyXw01IL05AQesPO6R1TkC2PlwoALxOQCuSqBVcAk9An+X0ArhIT0AUOUHwE49PQImMjd1v1U9A/+9s5eUNUEC5GRPcEzFQQHRDudJBVFBALm1fyW93UEDolgXAnZpQQKPAq7bLvVBAXepRrfngUEAYFPijJwRRQNI9nppVJ1FAjWdEkYNKUUBHkeqHsW1RQAK7kH7fkFFAvOQ2dQ20UUB2Dt1rO9dRQDE4g2Jp+lFA62EpWZcdUkCmi89PxUBSQA==",
+        "y:double array": "/NNkoI6fCD+mB6EpQ3gMP0BUaQL6ChI/ZlS+L+ukFz9JG1R1Q+AeP39U/BG/vyM/jNQRmsCbKD+70Q3bSuAtP2Empph7vDE/JQaHnuO4ND9codM8pQM4P7aTrJlk2Ds/te/oJ9lHQD/nAYosuEtDP0pqrvQLMkc/5p7IOJAuTD8aoqZZOTJRP/m+45hp71Q/aQJsfjlHWT+AmSTYDCdePwSXwclWu2E/QuvpodePZD/jG+GFcopnP/WakpXsq2o/bHgAAWf9bT8ZKiDkvcdwPys8d6b4u3I/yeT11XbndD+SemqDTVZ3P9dwHpjlE3o/E1/LasUqfT/IPN2QQlKAP4VPbmDFRII/PdCqKShwhD+91+/5IdaGP8SZtUxNdok/9lan3MNNjD9uJQ/rEVePPxW7tDI+RZE/0FLxjTfvkj+ddkcE76OUP3fOFn8/XZY/U/Xa3XgUmD/xx1GnisKZP3BFCCFnYJs/YWpN1qvnnD91bL0reVOeP69zFvtBoZ8/Z7ac1qdooD/M4yVBY/OgP/IzEkqNc6E/n3ujLojsoT8iQXbhwGGiP8Z5a4AU1qI/qKc0ZFNLoz/Z1TX48MGjPzrGcxTkOKQ/io1akbOtpD9N1lcDpxylPx6izjUTgaU/SqtwArzVpT84q+UuSBWmP85D7tDFOqY/+yywTTtCpj/F9Q9mOCmmPwV4RcZN76U/5jRPDEeWpT9dcOlzBCKlP1YDn2Xkl6Q/Kc6Jf8/9oz9Trb3yHlmjP5eNq++rraI/1/ep+lH9oT9XeF/YC0ihP2S12Y6fjKA/El5AkTyTnz9j8qNQx/ydP7OnjpuLV5w/nhwjEo6omj+lkDz9iveYPycKTtqWTZc/ccrg8HGzlT+4btvLBTCUP3+1/s9nx5I/eJOFcY16kT+FB92vq0eQPxkgpnAjVo4/I52rZG9AjD/XNQhsdkWKP/cJr7AvXog/wxEloRKGhj86dbW0QLuEP6sUJV1C/oI/JN3tAYFRgT+p55lsJ3F/P2OTywnNbnw/r5WwcJaieT89C4tHNRB3P2xZU59Ft3Q/+TCrOjaTcj+2lxNaZpxwP6eo6GRjlG0/doJ6R4Eqaj/3jzRkpfJmPwrANKDc62M/daib0qMbYT9judGH4xVdPylmaEM+hVg/ymQi2MqQVD+fn8ZJdTpRPxTMPl639Ew/QKy0cZKBSD+IDr92fvJEP2iEDtPvGkI//RSstwyfPz98i5YNZ9I7P5G19K4+jjg/42J84X+fNT+OB4Y1zuIyP++9bg6MRDA/fHMsRBd/Kz/YaLg6lLQmPwSV1VsDRiI/imtCyTmtHD+G5l9ZShEWPwIDBQVl8BA/cKQlQgPkCj/hUHlsJFsHPw=="
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_08fa254f96464637a290e36331903b17');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_08fa254f96464637a290e36331903b17);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_08fa254f96464637a290e36331903b17" class="viewer-container">
+    </div>
+</section>
+
 <h3><a name="Sample-statistics" class="anchor" href="#Sample-statistics">Sample statistics</a></h3>
 <p>Use <code>summary</code> and <code>qsummary</code> functions to quickly compute mean, standard deviation, 95% and 68% quantiles of a sample:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs25', 60)" onmouseover="showTip(event, 'fs25', 60)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> (<span onmouseout="hideTip(event, 'fs31', 61)" onmouseover="showTip(event, 'fs31', 61)" class="f">summary</span> <span onmouseout="hideTip(event, 'fs16', 62)" onmouseover="showTip(event, 'fs16', 62)" class="i">samples</span>)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs31', 58)" onmouseover="showTip(event, 'fs31', 58)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> (<span onmouseout="hideTip(event, 'fs32', 59)" onmouseover="showTip(event, 'fs32', 59)" class="f">summary</span> <span onmouseout="hideTip(event, 'fs16', 60)" onmouseover="showTip(event, 'fs16', 60)" class="i">samples</span>)
 </code></pre></td>
 </tr>
 </table>
@@ -150,7 +200,7 @@ If this number is not a power of two he number of points will be the next larger
  variance = 80.56673735;}</code></pre></td></tr></table>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs25', 63)" onmouseover="showTip(event, 'fs25', 63)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> (<span onmouseout="hideTip(event, 'fs32', 64)" onmouseover="showTip(event, 'fs32', 64)" class="f">qsummary</span> <span onmouseout="hideTip(event, 'fs16', 65)" onmouseover="showTip(event, 'fs16', 65)" class="i">samples</span>)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs31', 61)" onmouseover="showTip(event, 'fs31', 61)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> (<span onmouseout="hideTip(event, 'fs33', 62)" onmouseover="showTip(event, 'fs33', 62)" class="f">qsummary</span> <span onmouseout="hideTip(event, 'fs16', 63)" onmouseover="showTip(event, 'fs16', 63)" class="i">samples</span>)
 </code></pre></td>
 </tr>
 </table>
@@ -187,14 +237,15 @@ If this number is not a power of two he number of points will be the next larger
 <div class="tip" id="fs22">val x : float</div>
 <div class="tip" id="fs23">val exp : value:&#39;T -&gt; &#39;T (requires member Exp)<br /><br />Full name: Microsoft.FSharp.Core.Operators.exp</div>
 <div class="tip" id="fs24">val log_pdf : d:Distribution -&gt; v:float -&gt; float<br /><br />Full name: Angara.Statistics.log_pdf</div>
-<div class="tip" id="fs25">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
-<div class="tip" id="fs26">module Array<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="tip" id="fs27">val zip3 : array1:&#39;T1 [] -&gt; array2:&#39;T2 [] -&gt; array3:&#39;T3 [] -&gt; (&#39;T1 * &#39;T2 * &#39;T3) []<br /><br />Full name: Microsoft.FSharp.Collections.Array.zip3</div>
-<div class="tip" id="fs28">val iter : action:(&#39;T -&gt; unit) -&gt; array:&#39;T [] -&gt; unit<br /><br />Full name: Microsoft.FSharp.Collections.Array.iter</div>
-<div class="tip" id="fs29">val y1 : float</div>
-<div class="tip" id="fs30">val y2 : float</div>
-<div class="tip" id="fs31">val summary : data:seq&lt;float&gt; -&gt; summaryType<br /><br />Full name: Angara.Statistics.summary</div>
-<div class="tip" id="fs32">val qsummary : data:seq&lt;float&gt; -&gt; qsummaryType<br /><br />Full name: Angara.Statistics.qsummary</div>
+<div class="tip" id="fs25">namespace Angara.Charting</div>
+<div class="tip" id="fs26">val chart : Chart<br /><br />Full name: Tutorial.chart</div>
+<div class="tip" id="fs27">type Chart =<br />&#160;&#160;{Plots: PlotInfo list;}<br />&#160;&#160;static member ofList : plots:PlotInfo list -&gt; Chart<br /><br />Full name: Angara.Charting.Chart</div>
+<div class="tip" id="fs28">static member Chart.ofList : plots:PlotInfo list -&gt; Chart</div>
+<div class="tip" id="fs29">type Plot =<br />&#160;&#160;private new : unit -&gt; Plot<br />&#160;&#160;static member band : seriesX:float [] * seriesY1:float [] * seriesY2:float [] * ?fill:string * ?displayName:string * ?titles:BandTitles -&gt; PlotInfo<br />&#160;&#160;static member heatmap : x:float [] * y:float [] * values:float [] * ?colorPalette:string * ?treatAs:HeatmapTreatAs * ?displayName:string * ?titles:HeatmapTitles -&gt; PlotInfo<br />&#160;&#160;static member heatmap : x:float [] * y:float [] * values:HeatmapValues * ?colorPalette:string * ?treatAs:HeatmapTreatAs * ?displayName:string * ?titles:HeatmapTitles -&gt; PlotInfo<br />&#160;&#160;static member line : seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member line : seriesX:float [] * seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member line : x:LineX * y:LineY * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member markers : seriesX:float [] * seriesY:float [] * ?color:MarkersColor * ?colorPalette:string * ?size:MarkersSize * ?sizeRange:MarkersSizeRange * ?shape:MarkersShape * ?borderColor:string * ?displayName:string * ?titles:MarkersTitles -&gt; PlotInfo<br />&#160;&#160;static member markers : x:MarkersX * y:MarkersY * ?color:MarkersColor * ?colorPalette:string * ?size:MarkersSize * ?sizeRange:MarkersSizeRange * ?shape:MarkersShape * ?borderColor:string * ?displayName:string * ?titles:MarkersTitles -&gt; PlotInfo<br /><br />Full name: Angara.Charting.Plot</div>
+<div class="tip" id="fs30">static member Plot.line : seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />static member Plot.line : seriesX:float [] * seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />static member Plot.line : x:LineX * y:LineY * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo</div>
+<div class="tip" id="fs31">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
+<div class="tip" id="fs32">val summary : data:seq&lt;float&gt; -&gt; summaryType<br /><br />Full name: Angara.Statistics.summary</div>
+<div class="tip" id="fs33">val qsummary : data:seq&lt;float&gt; -&gt; qsummaryType<br /><br />Full name: Angara.Statistics.qsummary</div>
 
         </div>
         <div class="span3">
