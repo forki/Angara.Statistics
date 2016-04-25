@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Supported probability distributions
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="A collection of statistics algorithms from Mersenne twister generator to MCMC sampling."/>
+    <meta name="author" content="Vassily Lyutsarev"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/Angara.Statistics/content/style.css" />
+    <script type="text/javascript" src="/Angara.Statistics/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <!--li><a href="http://predictionmachines.github.io/Angara">Angara</a></li-->
+          <li><a href="http://github.com/microsoft/Angara.Statistics">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/Angara.Statistics/index.html">Angara.Statistics</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="Supported-probability-distributions" class="anchor" href="#Supported-probability-distributions">Supported probability distributions</a></h1>
+<h2><a name="Continuous-random-variables" class="anchor" href="#Continuous-random-variables">Continuous random variables</a></h2>
+<p>We will use the following code to present a PDF and a histogram of distributions supported by the package.
+This compares output of <code>draw</code> and <code>log_pdf</code> functions for the same distribution.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Angara</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Statistics</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">Angara</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">Charting</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">d</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="i">xmin</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="i">xmax</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="i">n</span>, <span onmouseout="hideTip(event, 'fs9', 10)" onmouseover="showTip(event, 'fs9', 10)" class="i">k</span>, <span onmouseout="hideTip(event, 'fs10', 11)" onmouseover="showTip(event, 'fs10', 11)" class="i">mt</span> <span class="o">=</span> <span class="n">128</span>, <span class="n">131072</span>, <span onmouseout="hideTip(event, 'fs11', 12)" onmouseover="showTip(event, 'fs11', 12)" class="t">MT19937</span>()
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 13)" onmouseover="showTip(event, 'fs12', 13)" class="i">h</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 14)" onmouseover="showTip(event, 'fs13', 14)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 15)" onmouseover="showTip(event, 'fs14', 15)" class="f">init</span> <span onmouseout="hideTip(event, 'fs9', 16)" onmouseover="showTip(event, 'fs9', 16)" class="i">k</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs15', 17)" onmouseover="showTip(event, 'fs15', 17)" class="f">draw</span> <span onmouseout="hideTip(event, 'fs10', 18)" onmouseover="showTip(event, 'fs10', 18)" class="i">mt</span> <span onmouseout="hideTip(event, 'fs5', 19)" onmouseover="showTip(event, 'fs5', 19)" class="i">d</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs16', 20)" onmouseover="showTip(event, 'fs16', 20)" class="f">histogram_</span> <span onmouseout="hideTip(event, 'fs8', 21)" onmouseover="showTip(event, 'fs8', 21)" class="i">n</span> <span onmouseout="hideTip(event, 'fs6', 22)" onmouseover="showTip(event, 'fs6', 22)" class="i">xmin</span> <span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">xmax</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 24)" onmouseover="showTip(event, 'fs17', 24)" class="i">xh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 25)" onmouseover="showTip(event, 'fs18', 25)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">2</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 26)" onmouseover="showTip(event, 'fs8', 26)" class="i">n</span><span class="o">+</span><span class="n">1</span> <span class="k">-&gt;</span>
+                <span onmouseout="hideTip(event, 'fs6', 27)" onmouseover="showTip(event, 'fs6', 27)" class="i">xmin</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs19', 28)" onmouseover="showTip(event, 'fs19', 28)" class="f">float</span> (<span onmouseout="hideTip(event, 'fs18', 29)" onmouseover="showTip(event, 'fs18', 29)" class="i">i</span><span class="o">/</span><span class="n">2</span>) <span class="o">*</span> (<span onmouseout="hideTip(event, 'fs7', 30)" onmouseover="showTip(event, 'fs7', 30)" class="i">xmax</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs6', 31)" onmouseover="showTip(event, 'fs6', 31)" class="i">xmin</span>) <span class="o">/</span> <span onmouseout="hideTip(event, 'fs19', 32)" onmouseover="showTip(event, 'fs19', 32)" class="f">float</span> <span onmouseout="hideTip(event, 'fs8', 33)" onmouseover="showTip(event, 'fs8', 33)" class="i">n</span>|]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 34)" onmouseover="showTip(event, 'fs20', 34)" class="i">yh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 35)" onmouseover="showTip(event, 'fs18', 35)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">2</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 36)" onmouseover="showTip(event, 'fs8', 36)" class="i">n</span><span class="o">+</span><span class="n">1</span> <span class="k">-&gt;</span>
+                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 37)" onmouseover="showTip(event, 'fs18', 37)" class="i">i</span><span class="o">=</span><span class="n">0</span> <span class="o">||</span> <span onmouseout="hideTip(event, 'fs18', 38)" onmouseover="showTip(event, 'fs18', 38)" class="i">i</span><span class="o">=</span><span class="n">2</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 39)" onmouseover="showTip(event, 'fs8', 39)" class="i">n</span><span class="o">+</span><span class="n">1</span> <span class="k">then</span> <span class="n">0.</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs19', 40)" onmouseover="showTip(event, 'fs19', 40)" class="f">float</span> <span onmouseout="hideTip(event, 'fs8', 41)" onmouseover="showTip(event, 'fs8', 41)" class="i">n</span> <span class="o">/</span> (<span onmouseout="hideTip(event, 'fs7', 42)" onmouseover="showTip(event, 'fs7', 42)" class="i">xmax</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs6', 43)" onmouseover="showTip(event, 'fs6', 43)" class="i">xmin</span>) <span class="o">*</span> <span onmouseout="hideTip(event, 'fs19', 44)" onmouseover="showTip(event, 'fs19', 44)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs12', 45)" onmouseover="showTip(event, 'fs12', 45)" class="i">h</span><span class="o">.</span>[(<span onmouseout="hideTip(event, 'fs18', 46)" onmouseover="showTip(event, 'fs18', 46)" class="i">i</span><span class="o">-</span><span class="n">1</span>)<span class="o">/</span><span class="n">2</span>]) <span class="o">/</span> <span onmouseout="hideTip(event, 'fs19', 47)" onmouseover="showTip(event, 'fs19', 47)" class="f">float</span> <span onmouseout="hideTip(event, 'fs9', 48)" onmouseover="showTip(event, 'fs9', 48)" class="i">k</span> |]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 49)" onmouseover="showTip(event, 'fs21', 49)" class="i">xpdf</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 50)" onmouseover="showTip(event, 'fs18', 50)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span onmouseout="hideTip(event, 'fs8', 51)" onmouseover="showTip(event, 'fs8', 51)" class="i">n</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs6', 52)" onmouseover="showTip(event, 'fs6', 52)" class="i">xmin</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs19', 53)" onmouseover="showTip(event, 'fs19', 53)" class="f">float</span> <span onmouseout="hideTip(event, 'fs18', 54)" onmouseover="showTip(event, 'fs18', 54)" class="i">i</span> <span class="o">*</span> (<span onmouseout="hideTip(event, 'fs7', 55)" onmouseover="showTip(event, 'fs7', 55)" class="i">xmax</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs6', 56)" onmouseover="showTip(event, 'fs6', 56)" class="i">xmin</span>) <span class="o">/</span> <span onmouseout="hideTip(event, 'fs19', 57)" onmouseover="showTip(event, 'fs19', 57)" class="f">float</span> <span onmouseout="hideTip(event, 'fs8', 58)" onmouseover="showTip(event, 'fs8', 58)" class="i">n</span>|]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 59)" onmouseover="showTip(event, 'fs22', 59)" class="i">ypdf</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 60)" onmouseover="showTip(event, 'fs23', 60)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs24', 61)" onmouseover="showTip(event, 'fs24', 61)" class="f">map</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs25', 62)" onmouseover="showTip(event, 'fs25', 62)" class="i">x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs26', 63)" onmouseover="showTip(event, 'fs26', 63)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs27', 64)" onmouseover="showTip(event, 'fs27', 64)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs5', 65)" onmouseover="showTip(event, 'fs5', 65)" class="i">d</span> <span onmouseout="hideTip(event, 'fs25', 66)" onmouseover="showTip(event, 'fs25', 66)" class="i">x</span>)) <span onmouseout="hideTip(event, 'fs21', 67)" onmouseover="showTip(event, 'fs21', 67)" class="i">xpdf</span>
+    <span onmouseout="hideTip(event, 'fs28', 68)" onmouseover="showTip(event, 'fs28', 68)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 69)" onmouseover="showTip(event, 'fs29', 69)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs30', 70)" onmouseover="showTip(event, 'fs30', 70)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 71)" onmouseover="showTip(event, 'fs31', 71)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs21', 72)" onmouseover="showTip(event, 'fs21', 72)" class="i">xpdf</span>, <span onmouseout="hideTip(event, 'fs22', 73)" onmouseover="showTip(event, 'fs22', 73)" class="i">ypdf</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
+                  <span onmouseout="hideTip(event, 'fs30', 74)" onmouseover="showTip(event, 'fs30', 74)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 75)" onmouseover="showTip(event, 'fs31', 75)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 76)" onmouseover="showTip(event, 'fs17', 76)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs20', 77)" onmouseover="showTip(event, 'fs20', 77)" class="i">yh</span>)]
+</code></pre></td>
+</tr>
+</table>
+<h3><a name="Uniform-distribution" class="anchor" href="#Uniform-distribution">Uniform distribution</a></h3>
+<p><code>Uniform(lower_bound, upper_bound)</code> signifies a uniform probability distribution on [lower<em>bound, upper</em>bound) interval.
+Upper bound must be greater than lower bound.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs32', 78)" onmouseover="showTip(event, 'fs32', 78)" class="i">chart_uniform</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 79)" onmouseover="showTip(event, 'fs5', 79)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs33', 80)" onmouseover="showTip(event, 'fs33', 80)" class="p">Uniform</span>(<span class="o">-</span><span class="n">1.</span>,<span class="n">2.</span>)
+    <span onmouseout="hideTip(event, 'fs4', 81)" onmouseover="showTip(event, 'fs4', 81)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 82)" onmouseover="showTip(event, 'fs5', 82)" class="i">d</span> <span class="o">-</span><span class="n">1.5</span> <span class="n">2.5</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_93fcdabf4a164c16ae3e9da1b8d7c7ad = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAA+L8AAAAAAID3vwAAAAAAAPe/AAAAAACA9r8AAAAAAAD2vwAAAAAAgPW/AAAAAAAA9b8AAAAAAID0vwAAAAAAAPS/AAAAAACA878AAAAAAADzvwAAAAAAgPK/AAAAAAAA8r8AAAAAAIDxvwAAAAAAAPG/AAAAAACA8L8AAAAAAADwvwAAAAAAAO+/AAAAAAAA7r8AAAAAAADtvwAAAAAAAOy/AAAAAAAA678AAAAAAADqvwAAAAAAAOm/AAAAAAAA6L8AAAAAAADnvwAAAAAAAOa/AAAAAAAA5b8AAAAAAADkvwAAAAAAAOO/AAAAAAAA4r8AAAAAAADhvwAAAAAAAOC/AAAAAAAA3r8AAAAAAADcvwAAAAAAANq/AAAAAAAA2L8AAAAAAADWvwAAAAAAANS/AAAAAAAA0r8AAAAAAADQvwAAAAAAAMy/AAAAAAAAyL8AAAAAAADEvwAAAAAAAMC/AAAAAAAAuL8AAAAAAACwvwAAAAAAAKC/AAAAAAAAAAAAAAAAAACgPwAAAAAAALA/AAAAAAAAuD8AAAAAAADAPwAAAAAAAMQ/AAAAAAAAyD8AAAAAAADMPwAAAAAAANA/AAAAAAAA0j8AAAAAAADUPwAAAAAAANY/AAAAAAAA2D8AAAAAAADaPwAAAAAAANw/AAAAAAAA3j8AAAAAAADgPwAAAAAAAOE/AAAAAAAA4j8AAAAAAADjPwAAAAAAAOQ/AAAAAAAA5T8AAAAAAADmPwAAAAAAAOc/AAAAAAAA6D8AAAAAAADpPwAAAAAAAOo/AAAAAAAA6z8AAAAAAADsPwAAAAAAAO0/AAAAAAAA7j8AAAAAAADvPwAAAAAAAPA/AAAAAACA8D8AAAAAAADxPwAAAAAAgPE/AAAAAAAA8j8AAAAAAIDyPwAAAAAAAPM/AAAAAACA8z8AAAAAAAD0PwAAAAAAgPQ/AAAAAAAA9T8AAAAAAID1PwAAAAAAAPY/AAAAAACA9j8AAAAAAAD3PwAAAAAAgPc/AAAAAAAA+D8AAAAAAID4PwAAAAAAAPk/AAAAAACA+T8AAAAAAAD6PwAAAAAAgPo/AAAAAAAA+z8AAAAAAID7PwAAAAAAAPw/AAAAAACA/D8AAAAAAAD9PwAAAAAAgP0/AAAAAAAA/j8AAAAAAID+PwAAAAAAAP8/AAAAAACA/z8AAAAAAAAAQAAAAAAAQABAAAAAAACAAEAAAAAAAMAAQAAAAAAAAAFAAAAAAABAAUAAAAAAAIABQAAAAAAAwAFAAAAAAAAAAkAAAAAAAEACQAAAAAAAgAJAAAAAAADAAkAAAAAAAAADQAAAAAAAQANAAAAAAACAA0AAAAAAAMADQAAAAAAAAARA",
+        "y:double array": "fAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEABVVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP1VVVVVVVdU/VVVVVVVV1T9VVVVVVVXVP3wAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAA"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA81j8AAAAAADzWPwAAAAAAPNU/AAAAAAA81T8AAAAAAKjUPwAAAAAAqNQ/AAAAAAAs1T8AAAAAACzVPwAAAAAAwNQ/AAAAAADA1D8AAAAAAKDWPwAAAAAAoNY/AAAAAAB81T8AAAAAAHzVPwAAAAAALNU/AAAAAAAs1T8AAAAAAGjXPwAAAAAAaNc/AAAAAADA1T8AAAAAAMDVPwAAAAAATNU/AAAAAABM1T8AAAAAAODUPwAAAAAA4NQ/AAAAAACU1T8AAAAAAJTVPwAAAAAAENU/AAAAAAAQ1T8AAAAAADzVPwAAAAAAPNU/AAAAAABk1T8AAAAAAGTVPwAAAAAARNU/AAAAAABE1T8AAAAAAEzVPwAAAAAATNU/AAAAAAB81T8AAAAAAHzVPwAAAAAAANU/AAAAAAAA1T8AAAAAAPjVPwAAAAAA+NU/AAAAAACk1T8AAAAAAKTVPwAAAAAAdNU/AAAAAAB01T8AAAAAAOjVPwAAAAAA6NU/AAAAAAAU1j8AAAAAABTWPwAAAAAAaNQ/AAAAAABo1D8AAAAAANjVPwAAAAAA2NU/AAAAAAB81D8AAAAAAHzUPwAAAAAAmNU/AAAAAACY1T8AAAAAACzVPwAAAAAALNU/AAAAAAAU1T8AAAAAABTVPwAAAAAAHNY/AAAAAAAc1j8AAAAAAAjVPwAAAAAACNU/AAAAAADg1D8AAAAAAODUPwAAAAAAKNU/AAAAAAAo1T8AAAAAAGTVPwAAAAAAZNU/AAAAAADw1j8AAAAAAPDWPwAAAAAAXNU/AAAAAABc1T8AAAAAAFDVPwAAAAAAUNU/AAAAAAAk1T8AAAAAACTVPwAAAAAAxNQ/AAAAAADE1D8AAAAAAATVPwAAAAAABNU/AAAAAACc1T8AAAAAAJzVPwAAAAAA2NQ/AAAAAADY1D8AAAAAAEjVPwAAAAAASNU/AAAAAADs1D8AAAAAAOzUPwAAAAAAhNQ/AAAAAACE1D8AAAAAAETVPwAAAAAARNU/AAAAAAD41T8AAAAAAPjVPwAAAAAAJNU/AAAAAAAk1T8AAAAAAFTVPwAAAAAAVNU/AAAAAACs1T8AAAAAAKzVPwAAAAAAjNU/AAAAAACM1T8AAAAAAKzUPwAAAAAArNQ/AAAAAABQ1T8AAAAAAFDVPwAAAAAA/NQ/AAAAAAD81D8AAAAAAJjVPwAAAAAAmNU/AAAAAADs1T8AAAAAAOzVPwAAAAAAmNU/AAAAAACY1T8AAAAAABjVPwAAAAAAGNU/AAAAAADo1T8AAAAAAOjVPwAAAAAADNU/AAAAAAAM1T8AAAAAANjWPwAAAAAA2NY/AAAAAABE1D8AAAAAAETUPwAAAAAAmNU/AAAAAACY1T8AAAAAAIDVPwAAAAAAgNU/AAAAAACs1D8AAAAAAKzUPwAAAAAAjNQ/AAAAAACM1D8AAAAAALDUPwAAAAAAsNQ/AAAAAACM1D8AAAAAAIzUPwAAAAAADNU/AAAAAAAM1T8AAAAAAJjUPwAAAAAAmNQ/AAAAAACs1T8AAAAAAKzVPwAAAAAAXNQ/AAAAAABc1D8AAAAAAIjWPwAAAAAAiNY/AAAAAACU1T8AAAAAAJTVPwAAAAAAsNU/AAAAAACw1T8AAAAAAATVPwAAAAAABNU/AAAAAAB41D8AAAAAAHjUPwAAAAAA7NU/AAAAAADs1T8AAAAAACjVPwAAAAAAKNU/AAAAAAAQ1T8AAAAAABDVPwAAAAAAuNU/AAAAAAC41T8AAAAAAAjVPwAAAAAACNU/AAAAAAC81T8AAAAAALzVPwAAAAAAPNU/AAAAAAA81T8AAAAAAPTVPwAAAAAA9NU/AAAAAABY1T8AAAAAAFjVPwAAAAAAHNY/AAAAAAAc1j8AAAAAADTVPwAAAAAANNU/AAAAAACk1D8AAAAAAKTUPwAAAAAAkNU/AAAAAACQ1T8AAAAAAHTUPwAAAAAAdNQ/AAAAAABM1T8AAAAAAEzVPwAAAAAAtNQ/AAAAAAC01D8AAAAAAFzVPwAAAAAAXNU/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_93fcdabf4a164c16ae3e9da1b8d7c7ad');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_93fcdabf4a164c16ae3e9da1b8d7c7ad);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_93fcdabf4a164c16ae3e9da1b8d7c7ad" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Log-uniform-distribution" class="anchor" href="#Log-uniform-distribution">Log-uniform distribution</a></h3>
+<p><code>Uniform(lower_bound, upper_bound)</code>. A uniform distribution of <code>log(x)</code> is a non-uniform for <code>x</code>.
+Both bounds must be greater than zero.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs34', 83)" onmouseover="showTip(event, 'fs34', 83)" class="i">chart_loguniform</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 84)" onmouseover="showTip(event, 'fs5', 84)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs35', 85)" onmouseover="showTip(event, 'fs35', 85)" class="p">LogUniform</span>(<span class="n">0.5</span>,<span class="n">1.5</span>)
+    <span onmouseout="hideTip(event, 'fs4', 86)" onmouseover="showTip(event, 'fs4', 86)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 87)" onmouseover="showTip(event, 'fs5', 87)" class="i">d</span> <span class="n">0.</span> <span class="n">2.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_43c9925d84dc4d5a8bef3375deb7b6ec = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAACQPwAAAAAAAKA/AAAAAAAAqD8AAAAAAACwPwAAAAAAALQ/AAAAAAAAuD8AAAAAAAC8PwAAAAAAAMA/AAAAAAAAwj8AAAAAAADEPwAAAAAAAMY/AAAAAAAAyD8AAAAAAADKPwAAAAAAAMw/AAAAAAAAzj8AAAAAAADQPwAAAAAAANE/AAAAAAAA0j8AAAAAAADTPwAAAAAAANQ/AAAAAAAA1T8AAAAAAADWPwAAAAAAANc/AAAAAAAA2D8AAAAAAADZPwAAAAAAANo/AAAAAAAA2z8AAAAAAADcPwAAAAAAAN0/AAAAAAAA3j8AAAAAAADfPwAAAAAAAOA/AAAAAACA4D8AAAAAAADhPwAAAAAAgOE/AAAAAAAA4j8AAAAAAIDiPwAAAAAAAOM/AAAAAACA4z8AAAAAAADkPwAAAAAAgOQ/AAAAAAAA5T8AAAAAAIDlPwAAAAAAAOY/AAAAAACA5j8AAAAAAADnPwAAAAAAgOc/AAAAAAAA6D8AAAAAAIDoPwAAAAAAAOk/AAAAAACA6T8AAAAAAADqPwAAAAAAgOo/AAAAAAAA6z8AAAAAAIDrPwAAAAAAAOw/AAAAAACA7D8AAAAAAADtPwAAAAAAgO0/AAAAAAAA7j8AAAAAAIDuPwAAAAAAAO8/AAAAAACA7z8AAAAAAADwPwAAAAAAQPA/AAAAAACA8D8AAAAAAMDwPwAAAAAAAPE/AAAAAABA8T8AAAAAAIDxPwAAAAAAwPE/AAAAAAAA8j8AAAAAAEDyPwAAAAAAgPI/AAAAAADA8j8AAAAAAADzPwAAAAAAQPM/AAAAAACA8z8AAAAAAMDzPwAAAAAAAPQ/AAAAAABA9D8AAAAAAID0PwAAAAAAwPQ/AAAAAAAA9T8AAAAAAED1PwAAAAAAgPU/AAAAAADA9T8AAAAAAAD2PwAAAAAAQPY/AAAAAACA9j8AAAAAAMD2PwAAAAAAAPc/AAAAAABA9z8AAAAAAID3PwAAAAAAwPc/AAAAAAAA+D8AAAAAAED4PwAAAAAAgPg/AAAAAADA+D8AAAAAAAD5PwAAAAAAQPk/AAAAAACA+T8AAAAAAMD5PwAAAAAAAPo/AAAAAABA+j8AAAAAAID6PwAAAAAAwPo/AAAAAAAA+z8AAAAAAED7PwAAAAAAgPs/AAAAAADA+z8AAAAAAAD8PwAAAAAAQPw/AAAAAACA/D8AAAAAAMD8PwAAAAAAAP0/AAAAAABA/T8AAAAAAID9PwAAAAAAwP0/AAAAAAAA/j8AAAAAAED+PwAAAAAAgP4/AAAAAADA/j8AAAAAAAD/PwAAAAAAQP8/AAAAAACA/z8AAAAAAMD/PwAAAAAAAABA",
+        "y:double array": "fAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAFPBvAOuIP0/GkevQbg+/D/lprEwDWr7P4cI/SeJofo/2Kvg5ijk+T+pKqozBTH5P2F6kStPh/g/yBTjI03m9z92Z/0CWE33P/ZLrPzYu/Y/cNxSoUcx9j+Av2gyKK31P1R1QzEKL/U/FCMaH4e29D8vF8ZmQUP0PzSvCGrj1PM/4oAorR5r8z+qKpAcqwXzPyu5ymhGpPI/mcTLdbNG8j+WT+rauezxP4DQWXEllvE/kHJA78VC8T8Qkc+NbvLwP1Ql/rj1pPA/llG2xzRa8D/o93C7BxLwPzxluwyamO8/njSnrsoR7z9t18HVZo/uPyUay8E3Ee4/QXtuLAqX7T9UwbwDriDtP1Z/ECv2rew/G0evQbg+7D8xGI5uzNLrP+WmsTANaus/lMmyM1cE6z+HCP0niaHqP34+aZ6DQeo/2Kvg5ijk6T8tCL7xXInpP6kqqjMFMek/5fa4iwjb6D9hepErT4foP6mqcYHCNeg/yBTjI03m5z97Ifq+2pjnP3Zn/QJYTec/Fu5VlLID5z/2S6z82LvmP8xBGZ26deY/cdxSoUcx5j9RUsHzcO7lP4C/aDIoreU/35+WpF9t5T9UdUMxCi/lP0JuGlYb8uQ/FCMaH4e25D8ZpMIeQnzkPy8XxmZBQ+Q/bhEygXoL5D8zrwhq49TjP7QuQYlyn+M/4oAorR5r4z98AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAA"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAJA/AAAAAAAAkD8AAAAAAACgPwAAAAAAAKA/AAAAAAAAqD8AAAAAAACoPwAAAAAAALA/AAAAAAAAsD8AAAAAAAC0PwAAAAAAALQ/AAAAAAAAuD8AAAAAAAC4PwAAAAAAALw/AAAAAAAAvD8AAAAAAADAPwAAAAAAAMA/AAAAAAAAwj8AAAAAAADCPwAAAAAAAMQ/AAAAAAAAxD8AAAAAAADGPwAAAAAAAMY/AAAAAAAAyD8AAAAAAADIPwAAAAAAAMo/AAAAAAAAyj8AAAAAAADMPwAAAAAAAMw/AAAAAAAAzj8AAAAAAADOPwAAAAAAANA/AAAAAAAA0D8AAAAAAADRPwAAAAAAANE/AAAAAAAA0j8AAAAAAADSPwAAAAAAANM/AAAAAAAA0z8AAAAAAADUPwAAAAAAANQ/AAAAAAAA1T8AAAAAAADVPwAAAAAAANY/AAAAAAAA1j8AAAAAAADXPwAAAAAAANc/AAAAAAAA2D8AAAAAAADYPwAAAAAAANk/AAAAAAAA2T8AAAAAAADaPwAAAAAAANo/AAAAAAAA2z8AAAAAAADbPwAAAAAAANw/AAAAAAAA3D8AAAAAAADdPwAAAAAAAN0/AAAAAAAA3j8AAAAAAADePwAAAAAAAN8/AAAAAAAA3z8AAAAAAADgPwAAAAAAAOA/AAAAAACA4D8AAAAAAIDgPwAAAAAAAOE/AAAAAAAA4T8AAAAAAIDhPwAAAAAAgOE/AAAAAAAA4j8AAAAAAADiPwAAAAAAgOI/AAAAAACA4j8AAAAAAADjPwAAAAAAAOM/AAAAAACA4z8AAAAAAIDjPwAAAAAAAOQ/AAAAAAAA5D8AAAAAAIDkPwAAAAAAgOQ/AAAAAAAA5T8AAAAAAADlPwAAAAAAgOU/AAAAAACA5T8AAAAAAADmPwAAAAAAAOY/AAAAAACA5j8AAAAAAIDmPwAAAAAAAOc/AAAAAAAA5z8AAAAAAIDnPwAAAAAAgOc/AAAAAAAA6D8AAAAAAADoPwAAAAAAgOg/AAAAAACA6D8AAAAAAADpPwAAAAAAAOk/AAAAAACA6T8AAAAAAIDpPwAAAAAAAOo/AAAAAAAA6j8AAAAAAIDqPwAAAAAAgOo/AAAAAAAA6z8AAAAAAADrPwAAAAAAgOs/AAAAAACA6z8AAAAAAADsPwAAAAAAAOw/AAAAAACA7D8AAAAAAIDsPwAAAAAAAO0/AAAAAAAA7T8AAAAAAIDtPwAAAAAAgO0/AAAAAAAA7j8AAAAAAADuPwAAAAAAgO4/AAAAAACA7j8AAAAAAADvPwAAAAAAAO8/AAAAAACA7z8AAAAAAIDvPwAAAAAAAPA/AAAAAAAA8D8AAAAAAEDwPwAAAAAAQPA/AAAAAACA8D8AAAAAAIDwPwAAAAAAwPA/AAAAAADA8D8AAAAAAADxPwAAAAAAAPE/AAAAAABA8T8AAAAAAEDxPwAAAAAAgPE/AAAAAACA8T8AAAAAAMDxPwAAAAAAwPE/AAAAAAAA8j8AAAAAAADyPwAAAAAAQPI/AAAAAABA8j8AAAAAAIDyPwAAAAAAgPI/AAAAAADA8j8AAAAAAMDyPwAAAAAAAPM/AAAAAAAA8z8AAAAAAEDzPwAAAAAAQPM/AAAAAACA8z8AAAAAAIDzPwAAAAAAwPM/AAAAAADA8z8AAAAAAAD0PwAAAAAAAPQ/AAAAAABA9D8AAAAAAED0PwAAAAAAgPQ/AAAAAACA9D8AAAAAAMD0PwAAAAAAwPQ/AAAAAAAA9T8AAAAAAAD1PwAAAAAAQPU/AAAAAABA9T8AAAAAAID1PwAAAAAAgPU/AAAAAADA9T8AAAAAAMD1PwAAAAAAAPY/AAAAAAAA9j8AAAAAAED2PwAAAAAAQPY/AAAAAACA9j8AAAAAAID2PwAAAAAAwPY/AAAAAADA9j8AAAAAAAD3PwAAAAAAAPc/AAAAAABA9z8AAAAAAED3PwAAAAAAgPc/AAAAAACA9z8AAAAAAMD3PwAAAAAAwPc/AAAAAAAA+D8AAAAAAAD4PwAAAAAAQPg/AAAAAABA+D8AAAAAAID4PwAAAAAAgPg/AAAAAADA+D8AAAAAAMD4PwAAAAAAAPk/AAAAAAAA+T8AAAAAAED5PwAAAAAAQPk/AAAAAACA+T8AAAAAAID5PwAAAAAAwPk/AAAAAADA+T8AAAAAAAD6PwAAAAAAAPo/AAAAAABA+j8AAAAAAED6PwAAAAAAgPo/AAAAAACA+j8AAAAAAMD6PwAAAAAAwPo/AAAAAAAA+z8AAAAAAAD7PwAAAAAAQPs/AAAAAABA+z8AAAAAAID7PwAAAAAAgPs/AAAAAADA+z8AAAAAAMD7PwAAAAAAAPw/AAAAAAAA/D8AAAAAAED8PwAAAAAAQPw/AAAAAACA/D8AAAAAAID8PwAAAAAAwPw/AAAAAADA/D8AAAAAAAD9PwAAAAAAAP0/AAAAAABA/T8AAAAAAED9PwAAAAAAgP0/AAAAAACA/T8AAAAAAMD9PwAAAAAAwP0/AAAAAAAA/j8AAAAAAAD+PwAAAAAAQP4/AAAAAABA/j8AAAAAAID+PwAAAAAAgP4/AAAAAADA/j8AAAAAAMD+PwAAAAAAAP8/AAAAAAAA/z8AAAAAAED/PwAAAAAAQP8/AAAAAACA/z8AAAAAAID/PwAAAAAAwP8/AAAAAADA/z8AAAAAAAAAQAAAAAAAAABA",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_43c9925d84dc4d5a8bef3375deb7b6ec');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_43c9925d84dc4d5a8bef3375deb7b6ec);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_43c9925d84dc4d5a8bef3375deb7b6ec" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Normal-distribution" class="anchor" href="#Normal-distribution">Normal distribution</a></h3>
+<p><code>Normal(mean, standard_deviation)</code>. This is often used for real-valued random variables which exact distributions are not known.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs36', 88)" onmouseover="showTip(event, 'fs36', 88)" class="i">chart_normal</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 89)" onmouseover="showTip(event, 'fs5', 89)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs37', 90)" onmouseover="showTip(event, 'fs37', 90)" class="p">Normal</span>(<span class="n">37.</span>, <span class="n">9.</span>)
+    <span onmouseout="hideTip(event, 'fs4', 91)" onmouseover="showTip(event, 'fs4', 91)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 92)" onmouseover="showTip(event, 'fs5', 92)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_cd9805a21dbb4d5cbccf9a9d42dbf2aa = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAJEAAAAAAANgkQAAAAAAAsCVAAAAAAACIJkAAAAAAAGAnQAAAAAAAOChAAAAAAAAQKUAAAAAAAOgpQAAAAAAAwCpAAAAAAACYK0AAAAAAAHAsQAAAAAAASC1AAAAAAAAgLkAAAAAAAPguQAAAAAAA0C9AAAAAAABUMEAAAAAAAMAwQAAAAAAALDFAAAAAAACYMUAAAAAAAAQyQAAAAAAAcDJAAAAAAADcMkAAAAAAAEgzQAAAAAAAtDNAAAAAAAAgNEAAAAAAAIw0QAAAAAAA+DRAAAAAAABkNUAAAAAAANA1QAAAAAAAPDZAAAAAAACoNkAAAAAAABQ3QAAAAAAAgDdAAAAAAADsN0AAAAAAAFg4QAAAAAAAxDhAAAAAAAAwOUAAAAAAAJw5QAAAAAAACDpAAAAAAAB0OkAAAAAAAOA6QAAAAAAATDtAAAAAAAC4O0AAAAAAACQ8QAAAAAAAkDxAAAAAAAD8PEAAAAAAAGg9QAAAAAAA1D1AAAAAAABAPkAAAAAAAKw+QAAAAAAAGD9AAAAAAACEP0AAAAAAAPA/QAAAAAAALkBAAAAAAABkQEAAAAAAAJpAQAAAAAAA0EBAAAAAAAAGQUAAAAAAADxBQAAAAAAAckFAAAAAAACoQUAAAAAAAN5BQAAAAAAAFEJAAAAAAABKQkAAAAAAAIBCQAAAAAAAtkJAAAAAAADsQkAAAAAAACJDQAAAAAAAWENAAAAAAACOQ0AAAAAAAMRDQAAAAAAA+kNAAAAAAAAwREAAAAAAAGZEQAAAAAAAnERAAAAAAADSREAAAAAAAAhFQAAAAAAAPkVAAAAAAAB0RUAAAAAAAKpFQAAAAAAA4EVAAAAAAAAWRkAAAAAAAExGQAAAAAAAgkZAAAAAAAC4RkAAAAAAAO5GQAAAAAAAJEdAAAAAAABaR0AAAAAAAJBHQAAAAAAAxkdAAAAAAAD8R0AAAAAAADJIQAAAAAAAaEhAAAAAAACeSEAAAAAAANRIQAAAAAAACklAAAAAAABASUAAAAAAAHZJQAAAAAAArElAAAAAAADiSUAAAAAAABhKQAAAAAAATkpAAAAAAACESkAAAAAAALpKQAAAAAAA8EpAAAAAAAAmS0AAAAAAAFxLQAAAAAAAkktAAAAAAADIS0AAAAAAAP5LQAAAAAAANExAAAAAAABqTEAAAAAAAKBMQAAAAAAA1kxAAAAAAAAMTUAAAAAAAEJNQAAAAAAAeE1AAAAAAACuTUAAAAAAAORNQAAAAAAAGk5AAAAAAABQTkAAAAAAAIZOQAAAAAAAvE5AAAAAAADyTkAAAAAAAChPQAAAAAAAXk9AAAAAAACUT0AAAAAAAMpPQAAAAAAAAFBA",
+        "y:double array": "zoW/OMgiQD9KLB7OR41CP1Y9tb1mSEU//dryyLdcSD8dPsrHbNNLP4Ycq4tXtk8/fl5CgfQHUj90tqkul3VUP3iexP7lKVc/KcLI9voqWj/h+m3VMn9dP83k2UKTlmA/Ishyg9GdYj+kkVPaz9hkPzgb924ZS2c/bDJeT0L4aT+tdBj73+NsP+7XRobACHA/0uAjAlLCcT9+HQGfVqBzPxORzA1upHU/LmJCux/Qdz+JJaq21CR6P5q3u1PRo3w/ThNFly5Ofz+OgkjAaRKBPyU77iE3lII/MmQnxrYshD/VJO3u/NuFPwuAipj3oYc/2XE4cmt+iT9xYZcP8XCLP5WLdWHyeI0/Fw5WhKiVjz9knXb5DOOQP3JzIJWMBJI/kfol5qEukz8PIHUmgWCUP03othlEmZU/HxPJfOrXlj8SI0nHWhuYP50EfEFjYpk/USerb7urmj/WvsbSBfabP+J2wvzRP50/VD+89Z6Hnj9FmpLt3cufP4gNFJp6haA/Z/WZuKEhoT8eVZmJkbmhP/er6/V2TKI/Ghakd4DZoj+NMEMF4F+jPzzgTwLN3qM/lHbdLoZVpD+GC1yPU8OkP447AUaIJ6U/AdkmV4SBpT9q+CpSttClP0XSqNicFKY/2FhL/sdMpj95gv972nimP5zx6rGKmKY/IwRBdKOrpj/VE9mfBLKmPyMEQXSjq6Y/nPHqsYqYpj95gv972nimP9hYS/7HTKY/RdKo2JwUpj9q+CpSttClPwHZJleEgaU/jjsBRognpT+GC1yPU8OkP5R23S6GVaQ/POBPAs3eoz+NMEMF4F+jPxoWpHeA2aI/96vr9XZMoj8eVZmJkbmhP2f1mbihIaE/iA0UmnqFoD9FmpLt3cufP1Q/vPWeh54/4nbC/NE/nT/WvsbSBfabP1Enq2+7q5o/nQR8QWNimT8SI0nHWhuYPx8TyXzq15Y/Tei2GUSZlT8PIHUmgWCUP5H6JeahLpM/cnMglYwEkj9knXb5DOOQPxcOVoSolY8/lYt1YfJ4jT9xYZcP8XCLP9lxOHJrfok/C4CKmPehhz/VJO3u/NuFPzJkJ8a2LIQ/JTvuITeUgj+OgkjAaRKBP04TRZcuTn8/mre7U9GjfD+JJaq21CR6Py5iQrsf0Hc/E5HMDW6kdT9+HQGfVqBzP9LgIwJSwnE/7tdGhsAIcD+tdBj73+NsP2wyXk9C+Gk/OBv3bhlLZz+kkVPaz9hkPyLIcoPRnWI/zeTZQpOWYD/h+m3VMn9dPynCyPb6Klo/eJ7E/uUpVz90tqkul3VUP35eQoH0B1I/hhyri1e2Tz8dPsrHbNNLP/3a8si3XEg/Vj21vWZIRT9KLB7OR41CP86FvzjIIkA/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_cd9805a21dbb4d5cbccf9a9d42dbf2aa');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_cd9805a21dbb4d5cbccf9a9d42dbf2aa);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_cd9805a21dbb4d5cbccf9a9d42dbf2aa" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Log-normal-distribution" class="anchor" href="#Log-normal-distribution">Log-normal distribution</a></h3>
+<p><code>LogNormal(mean, standard_deviation_log)</code>. A normal distribution of <code>log(x)</code>. The second parameter is a standard deviation of log(x), not a standard deviation of x.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs38', 93)" onmouseover="showTip(event, 'fs38', 93)" class="i">chart_lognormal</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 94)" onmouseover="showTip(event, 'fs5', 94)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs39', 95)" onmouseover="showTip(event, 'fs39', 95)" class="p">LogNormal</span>(<span class="n">37.</span>, <span class="n">0.3</span>)
+    <span onmouseout="hideTip(event, 'fs4', 96)" onmouseover="showTip(event, 'fs4', 96)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 97)" onmouseover="showTip(event, 'fs5', 97)" class="i">d</span> <span class="n">10.</span> <span class="n">90.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_66870383e11f4ce6841ac76f6dff9d57 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAJEAAAAAAAEAlQAAAAAAAgCZAAAAAAADAJ0AAAAAAAAApQAAAAAAAQCpAAAAAAACAK0AAAAAAAMAsQAAAAAAAAC5AAAAAAABAL0AAAAAAAEAwQAAAAAAA4DBAAAAAAACAMUAAAAAAACAyQAAAAAAAwDJAAAAAAABgM0AAAAAAAAA0QAAAAAAAoDRAAAAAAABANUAAAAAAAOA1QAAAAAAAgDZAAAAAAAAgN0AAAAAAAMA3QAAAAAAAYDhAAAAAAAAAOUAAAAAAAKA5QAAAAAAAQDpAAAAAAADgOkAAAAAAAIA7QAAAAAAAIDxAAAAAAADAPEAAAAAAAGA9QAAAAAAAAD5AAAAAAACgPkAAAAAAAEA/QAAAAAAA4D9AAAAAAABAQEAAAAAAAJBAQAAAAAAA4EBAAAAAAAAwQUAAAAAAAIBBQAAAAAAA0EFAAAAAAAAgQkAAAAAAAHBCQAAAAAAAwEJAAAAAAAAQQ0AAAAAAAGBDQAAAAAAAsENAAAAAAAAAREAAAAAAAFBEQAAAAAAAoERAAAAAAADwREAAAAAAAEBFQAAAAAAAkEVAAAAAAADgRUAAAAAAADBGQAAAAAAAgEZAAAAAAADQRkAAAAAAACBHQAAAAAAAcEdAAAAAAADAR0AAAAAAABBIQAAAAAAAYEhAAAAAAACwSEAAAAAAAABJQAAAAAAAUElAAAAAAACgSUAAAAAAAPBJQAAAAAAAQEpAAAAAAACQSkAAAAAAAOBKQAAAAAAAMEtAAAAAAACAS0AAAAAAANBLQAAAAAAAIExAAAAAAABwTEAAAAAAAMBMQAAAAAAAEE1AAAAAAABgTUAAAAAAALBNQAAAAAAAAE5AAAAAAABQTkAAAAAAAKBOQAAAAAAA8E5AAAAAAABAT0AAAAAAAJBPQAAAAAAA4E9AAAAAAAAYUEAAAAAAAEBQQAAAAAAAaFBAAAAAAACQUEAAAAAAALhQQAAAAAAA4FBAAAAAAAAIUUAAAAAAADBRQAAAAAAAWFFAAAAAAACAUUAAAAAAAKhRQAAAAAAA0FFAAAAAAAD4UUAAAAAAACBSQAAAAAAASFJAAAAAAABwUkAAAAAAAJhSQAAAAAAAwFJAAAAAAADoUkAAAAAAABBTQAAAAAAAOFNAAAAAAABgU0AAAAAAAIhTQAAAAAAAsFNAAAAAAADYU0AAAAAAAABUQAAAAAAAKFRAAAAAAABQVEAAAAAAAHhUQAAAAAAAoFRAAAAAAADIVEAAAAAAAPBUQAAAAAAAGFVAAAAAAABAVUAAAAAAAGhVQAAAAAAAkFVAAAAAAAC4VUAAAAAAAOBVQAAAAAAACFZAAAAAAAAwVkAAAAAAAFhWQAAAAAAAgFZA",
+        "y:double array": "pNee0a2s5D4/ADS3DwP3Pk6eOynjkQc/Yuq1Kb91Fj8OBA0Z4xckP0bAcXRVATE/KwkE6FxnOz+/rsRbAiNFPzzbgPqkW08/kkv9pOl1Vj97TyP5Ky1fPy9ofRZuB2U/VUQV8QGlaz81bu2Ngb9xP2gKvMcGTnY/tivcRnZ8ez/O76EYG6KAP20C+7rszIM/1zR52MM2hz/mE93OytWKPywoaJSgno4/eblV6GBCkT8Az3dEez2TPwOwSEffOZU/+B5j5tswlz+m4wVT/RuZP9ZOTtY09Zo/QOS5h/m2nD+s492DYVyeP8Kh7q8z4Z8/SchdNPmgoD+oA37c7z2hP+FvMO59xqE/kEJ9dv85oj83keVQJ5iiP20aV4H44KI/JpD2dL4Uoz/pRsGMBDSjP2lywkmNP6M/wd8zZkk4oz85DikaTx+jP7lG8r3R9aI/xISu8Bm9oj8vndRefnaiP2ghBTtdI6I/wChNcxbFoT8KGSmmBl2hP8f9AdWC7KA/GBd6zdR0oD/OTBN/cO6fPzM8F+iw6Z4/OtiSK53dnT8DVmn8QMycP9yEW+1/t5s/IvO0vhShmj8KWBpakYqZP2ml+2BfdZg/ymALNMFilz+QIzlc01OWP77z6j+OSZU/9Gp6EchElD/i6j3mNkaTPzMtludyTpI/dZGLkfhdkT+f8nX0KnWQP5OA4uGrKI8/j7b8zWB3jT+zRESlvNaLP4aJOaPlRoo/+LrlHeTHiD+/XvUjplmHP9l76d4C/IU/oqXVt72uhD9mmkw+iXGDP9zbEtIJRII/mmf0ENglgT8gRbYKgxaAPxj6JnskK34/H3YYvA5FfD9sGBTav3l6P5IdAz8tyHg/ppuYNUkvdz/8lPARBa51PxGygRBTQ3Q/ICGh8Sfucj/jwqBXfK1xP1q7TO1NgHA/EieEtEDLbj9rCo4U/LhsP09g8pjxx2o/QWGgnVT2aD9q3Dr0aEJnP9Vvu2SDqmU/ZKq+/QktZD+7uOA6dMhiP+DB+wZLe2E/XZqKnyhEYD8A6ti7cENePwLAkdVsJVw/9cu9vt4rWj8Itjywf1RYP91HDvcnnVY/dJje780DVT95Y/v0hIZTP34Yt0J8I1I/rGS11f3YUD/qIEOM2kpPPyEqwESNDk0/gufSljr6Sj/hTkepNQtJP9N0gdH7Pkc/omzGaTKTRT8QKxe2pAVEP/aHN9lBlEI/IuYc2xo9QT9YXVuDwfw/P4AJ53jFrD0/e1ZJxxiHOz9yKWkVyIg5PxrS3UwSrzc/PGn1jGX3NT9rDwhEXF80P9zFYG665DI/6GXa+WqFMT93eS1NfT8wP1e2ouNFIi4/7AR+vlrxKz+L8qrMF+kpPzmJLHeTBig/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_66870383e11f4ce6841ac76f6dff9d57');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_66870383e11f4ce6841ac76f6dff9d57);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_66870383e11f4ce6841ac76f6dff9d57" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Exponential-distribution" class="anchor" href="#Exponential-distribution">Exponential distribution</a></h3>
+<p><code>Exponential(mean)</code>
+describes the time between events in a process
+in which events occur continuously and independently at a constant average rate.
+The only parameter must be greater than zero.
+Values of an exponentially distributed random variable are always greater than zero.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs40', 98)" onmouseover="showTip(event, 'fs40', 98)" class="i">chart_exponential</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 99)" onmouseover="showTip(event, 'fs5', 99)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs41', 100)" onmouseover="showTip(event, 'fs41', 100)" class="p">Exponential</span>(<span class="n">5.7</span>)
+    <span onmouseout="hideTip(event, 'fs4', 101)" onmouseover="showTip(event, 'fs4', 101)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 102)" onmouseover="showTip(event, 'fs5', 102)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_2ab5664d9f6a439eaeea7d331001bba9 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAADEPwAAAAAAANQ/AAAAAAAA3j8AAAAAAADkPwAAAAAAAOk/AAAAAAAA7j8AAAAAAIDxPwAAAAAAAPQ/AAAAAACA9j8AAAAAAAD5PwAAAAAAgPs/AAAAAAAA/j8AAAAAAEAAQAAAAAAAgAFAAAAAAADAAkAAAAAAAAAEQAAAAAAAQAVAAAAAAACABkAAAAAAAMAHQAAAAAAAAAlAAAAAAABACkAAAAAAAIALQAAAAAAAwAxAAAAAAAAADkAAAAAAAEAPQAAAAAAAQBBAAAAAAADgEEAAAAAAAIARQAAAAAAAIBJAAAAAAADAEkAAAAAAAGATQAAAAAAAABRAAAAAAACgFEAAAAAAAEAVQAAAAAAA4BVAAAAAAACAFkAAAAAAACAXQAAAAAAAwBdAAAAAAABgGEAAAAAAAAAZQAAAAAAAoBlAAAAAAABAGkAAAAAAAOAaQAAAAAAAgBtAAAAAAAAgHEAAAAAAAMAcQAAAAAAAYB1AAAAAAAAAHkAAAAAAAKAeQAAAAAAAQB9AAAAAAADgH0AAAAAAAEAgQAAAAAAAkCBAAAAAAADgIEAAAAAAADAhQAAAAAAAgCFAAAAAAADQIUAAAAAAACAiQAAAAAAAcCJAAAAAAADAIkAAAAAAABAjQAAAAAAAYCNAAAAAAACwI0AAAAAAAAAkQAAAAAAAUCRAAAAAAACgJEAAAAAAAPAkQAAAAAAAQCVAAAAAAACQJUAAAAAAAOAlQAAAAAAAMCZAAAAAAACAJkAAAAAAANAmQAAAAAAAICdAAAAAAABwJ0AAAAAAAMAnQAAAAAAAEChAAAAAAABgKEAAAAAAALAoQAAAAAAAAClAAAAAAABQKUAAAAAAAKApQAAAAAAA8ClAAAAAAABAKkAAAAAAAJAqQAAAAAAA4CpAAAAAAAAwK0AAAAAAAIArQAAAAAAA0CtAAAAAAAAgLEAAAAAAAHAsQAAAAAAAwCxAAAAAAAAQLUAAAAAAAGAtQAAAAAAAsC1AAAAAAAAALkAAAAAAAFAuQAAAAAAAoC5AAAAAAADwLkAAAAAAAEAvQAAAAAAAkC9AAAAAAADgL0AAAAAAABgwQAAAAAAAQDBAAAAAAABoMEAAAAAAAJAwQAAAAAAAuDBAAAAAAADgMEAAAAAAAAgxQAAAAAAAMDFAAAAAAABYMUAAAAAAAIAxQAAAAAAAqDFAAAAAAADQMUAAAAAAAPgxQAAAAAAAIDJAAAAAAABIMkAAAAAAAHAyQAAAAAAAmDJAAAAAAADAMkAAAAAAAOgyQAAAAAAAEDNAAAAAAAA4M0AAAAAAAGAzQAAAAAAAiDNAAAAAAACwM0AAAAAAANgzQAAAAAAAADRA",
+        "y:double array": "TGcxncV0xj93JAhGU9nFP+dNlPgUQsU/9vw/nO2uxD/JI97hwB/EPyJZOD5zlMM/JVfC5OkMwz80KHLCConCP98DvHi8CMI/AuWwWOaLwT+D6D5ecBLBPwuLkitDnMA//OGXBEgpwD/c5DWV0XK/P2SdDPAfmb4/hlF+OFHFvT+2GzyvPPe8P08JB6+6Lrw/XJoPpaRruz/pDIoJ1a26P64Gdlgn9bk/QDmYCnhBuT8Bp6SOpJK4P/s3mEKL6Lc/ZFdAbQtDtz/0Wu83BaK2PxV+XKhZBbY/UEOumupstT9QFq67mti0PyQRJINNSLQ/x85ZLue7sz+MPMO6TDOzP5NjzOBjrrI/QyrLDhMtsj/QFBRkQa+xP5oSMazWNLE/k2w5Wru9sD+A70mE2EmwP7rlOL4vsq8/f8Z7c8fWrj9D+sPyTQGuP9/UpyqaMa0/+vUFJoRnrD98alUE5aKrPzIEK/KW46o/8HbyIXUpqj9H1dnEW3SpP6gP7gMoxKg/DiNn+bcYqD/brCKq6nGnP+miS/+fz6Y/LfctwLgxpj8Z9zSMFpilP6I+E9WbAqU/fR8T2StxpD8pZI6dquOjP59ejOn8WaM/ZDmFQAjUoj8piUndslGiP/YjDa3j0qE/zkmUSoJXoT8YMYL5dt+gP98PyKGqaqA/nYFnlg3ynz+XUjoy6xSfP1kXY4zDPZ4/7+y3QG1snT9BDpQJwKCcP2l4GLiU2ps/LDCiLMUZmz+1tXRPLF6aP+Q8lwmmp5k/NEvjPQ/2mD/6ZEPCRUmYP319IFkooZc/F+b8qpb9lj+BgTtAcV6WP+4IEnuZw5U/kDilkfEslT/NwU2IXJqUP7ToBCy+C5Q/Frr3DPuAkz8zzz95+PmSP+2awHecdpI/rEMow832kT/EExPFc3qRPx+RUJF2AZE/4lJJ4b6LkD/MsoQPNhmQPwL7miaMU48/jZbp+LJ6jj/rYGTetqeNP/H0QEBv2ow/emesoLQSjD+5XDKTYFCLP3a0WLVNk4o/rWFup1fbiT//CowFWyiJP2wbxWA1eog/F/SHOMXQhz/J+Cv06SuHP8Y5rNyDi4Y/RoaNFnTvhT+1uu6bnFeFP+Ymwjbgw4Q/Ve8ueyI0hD/sVBnCR6iDP/fV0CM1IIM/SSLjctCbgj+k4xI3ABuCP3ZicairnYE/ZBWaqrojgT8nMQ/IFa2APwxUti2mOYA/4N3oTKuSfz/oJtAtHbh+P/qpgvJ3430/lN9sspIUfT8R3iigRUt8P74f1gFqh3s/Z0qmKdrIej/viJ1ucQ96PzYShSUMW3k/44EOmoereD8gsSYIwgB4P4rGdpWaWnc/Tj0SS/G4dj9lrFAPpxt2P7Me0p+dgnU/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_2ab5664d9f6a439eaeea7d331001bba9');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_2ab5664d9f6a439eaeea7d331001bba9);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_2ab5664d9f6a439eaeea7d331001bba9" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Gamma-distribution" class="anchor" href="#Gamma-distribution">Gamma distribution</a></h3>
+<p><code>Gamma(alpha, beta)</code> - a family of distributions of positive values.
+The parameters alpha and beta are sometimes called shape and rate. Both must be greater than zero.
+<code>Gamma(1, 1/lambda) === Exponential(lambda)</code>.
+A special case of Gamma <em>Γ(k/2, 1/2)</em> is a chi-squared distribution <em>χ²(k)</em>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs42', 103)" onmouseover="showTip(event, 'fs42', 103)" class="i">chart_gamma</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 104)" onmouseover="showTip(event, 'fs5', 104)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs43', 105)" onmouseover="showTip(event, 'fs43', 105)" class="p">Gamma</span>(<span class="n">3.0</span>, <span class="n">0.5</span>)
+    <span onmouseout="hideTip(event, 'fs4', 106)" onmouseover="showTip(event, 'fs4', 106)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 107)" onmouseover="showTip(event, 'fs5', 107)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_2d66ac25379848c0a352a6d9baa3e46f = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAADEPwAAAAAAANQ/AAAAAAAA3j8AAAAAAADkPwAAAAAAAOk/AAAAAAAA7j8AAAAAAIDxPwAAAAAAAPQ/AAAAAACA9j8AAAAAAAD5PwAAAAAAgPs/AAAAAAAA/j8AAAAAAEAAQAAAAAAAgAFAAAAAAADAAkAAAAAAAAAEQAAAAAAAQAVAAAAAAACABkAAAAAAAMAHQAAAAAAAAAlAAAAAAABACkAAAAAAAIALQAAAAAAAwAxAAAAAAAAADkAAAAAAAEAPQAAAAAAAQBBAAAAAAADgEEAAAAAAAIARQAAAAAAAIBJAAAAAAADAEkAAAAAAAGATQAAAAAAAABRAAAAAAACgFEAAAAAAAEAVQAAAAAAA4BVAAAAAAACAFkAAAAAAACAXQAAAAAAAwBdAAAAAAABgGEAAAAAAAAAZQAAAAAAAoBlAAAAAAABAGkAAAAAAAOAaQAAAAAAAgBtAAAAAAAAgHEAAAAAAAMAcQAAAAAAAYB1AAAAAAAAAHkAAAAAAAKAeQAAAAAAAQB9AAAAAAADgH0AAAAAAAEAgQAAAAAAAkCBAAAAAAADgIEAAAAAAADAhQAAAAAAAgCFAAAAAAADQIUAAAAAAACAiQAAAAAAAcCJAAAAAAADAIkAAAAAAABAjQAAAAAAAYCNAAAAAAACwI0AAAAAAAAAkQAAAAAAAUCRAAAAAAACgJEAAAAAAAPAkQAAAAAAAQCVAAAAAAACQJUAAAAAAAOAlQAAAAAAAMCZAAAAAAACAJkAAAAAAANAmQAAAAAAAICdAAAAAAABwJ0AAAAAAAMAnQAAAAAAAEChAAAAAAABgKEAAAAAAALAoQAAAAAAAAClAAAAAAABQKUAAAAAAAKApQAAAAAAA8ClAAAAAAABAKkAAAAAAAJAqQAAAAAAA4CpAAAAAAAAwK0AAAAAAAIArQAAAAAAA0CtAAAAAAAAgLEAAAAAAAHAsQAAAAAAAwCxAAAAAAAAQLUAAAAAAAGAtQAAAAAAAsC1AAAAAAAAALkAAAAAAAFAuQAAAAAAAoC5AAAAAAADwLkAAAAAAAEAvQAAAAAAAkC9AAAAAAADgL0AAAAAAABgwQAAAAAAAQDBAAAAAAABoMEAAAAAAAJAwQAAAAAAAuDBAAAAAAADgMEAAAAAAAAgxQAAAAAAAMDFAAAAAAABYMUAAAAAAAIAxQAAAAAAAqDFAAAAAAADQMUAAAAAAAPgxQAAAAAAAIDJAAAAAAABIMkAAAAAAAHAyQAAAAAAAmDJAAAAAAADAMkAAAAAAAOgyQAAAAAAAEDNAAAAAAAA4M0AAAAAAAGAzQAAAAAAAiDNAAAAAAACwM0AAAAAAANgzQAAAAAAAADRA",
+        "y:double array": "fAAAAAAAEABBs6pLCB9XP3lLxcg1YnU/LI5aNqs/hj8XNeULV0qSPzSpa6VWbpo/khIlFqWZoT+4e7kLziemPxf3IqZYw6o/ltkp35RTrz8wfPhnVeKxP3QRMl12A7Q/rjxw+x4Htj/Ocw8+xui3P5UP53ktpbk/VJ1cwiw6uz/6KTLWhaa8PyBrGte86b0/6vT/IvYDvz8XS9G32PW/PzDfXU06YMA/p6EbZZaywD9+E6Mn0vLAP1Gm/AbXIcE/M8rif59AwT+plc9FMVDBPzx5H1yYUcE/nblC/uJFwT+IGFo8Hi7BP+vTojRTC8E/4gnM1ITewD980bsQrqjAP7pedH7AasA/TgS4SKMlwD8Ix4fXZLS/P78bBGJ8Er8/iWLjvxVnvj9CHHY3obO9P3zh8st2+bw/Ept1gNY5vD83aRzN6HW7P3v+dTy/rro/AQrKKFXluT+FV/GRkBq5P2HPfAVDT7g/d1HUkyqEtz9p88PN8rm2PxuNosY18bU/jnraF30qtT/+jCfjQma0PxCJVdHypLM/T0SzC+vmsj8PQskufSyyP4sxMTXvdbE/c1GvWXzDsD9lyOjvVRWwP1sxh2ZI164/X/pNFw6NrT8MO+2PLUysP9fbgZzJFKs/fetjg/jmqT8bfeA8xcKoP7jQNJcwqKc/UZtSRzKXpj81aQrnuY+lPydPSeGvkaQ/Qh0jTfacoz+Bpmq4abGiP2f9nuLhzqE/ujX3aDL1oD/XvVZkKySgPxcc5vMzt54/UzDhvpE2nT8/onGmAcabP5VAjBMSZZo/lVM5IU8TmT8g8UBPQ9CXP2ZR5SJ4m5Y/9/3vtnZ0lT/C4kc8yFqUP2hCN2z2TZM/kXl57YtNkj92fRmtFFmRP5EzGywecJA/sna2hW8kjz9iNAW25X2NP9f2u0HG64s/Yt+1WT1tij/CnsFLfAGJP1xDXbq5p4c/nmW3yDFfhj+3rxo8JieFP42B05Pe/oM/q02LGKjlgj/iPgLk1dqBP6e5/eHA3YA/lbVilo/bfz+CTrA1nhR+P5ZbSf+BZXw/WrVBkRrNej8DSxKdUkp5P/wPRbQf3Hc/fZD+D4KBdj/ZDThUhDl1P/5RaU87A3Q/aiJPt8Xdcj9HUGrjS8hxP2i7w4X/wXA/41bmxDaUbz/dHrMMxr9tP2rg5fpEBWw/1jkyElxjaj+pgQutw9hoP8YvsmtDZGc/zZrDo7EEZj/ETLXR8rhkP6HHlgz5f2M/qnNnfMNYYj8KikLTXUJhPwwEmMnfO2A/3q8/O9mIXj+eAVgsZbZcP9PN6xHV/lo/x0n5yK5gWT+mnAZ7i9pXP0pnccAWa1Y/wDAayg0RVT+mvWuSPstTP1WBthWHmFI/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_2d66ac25379848c0a352a6d9baa3e46f');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_2d66ac25379848c0a352a6d9baa3e46f);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_2d66ac25379848c0a352a6d9baa3e46f" class="viewer-container">
+    </div>
+</section>
+
+<h2><a name="Descrete-distributions" class="anchor" href="#Descrete-distributions">Descrete distributions</a></h2>
+<p>For these distributions <code>draw</code> function always returns non-negative random values with zero fraction part.
+Probability distribution function <code>log_pdf</code> truncates franction part of its argument.
+The only exception is Bernoulli distribution in which case <code>log_pdf</code> treats all values of its argument <code>x &gt; 0.5</code> as <code>1</code>,
+and the rest argument valus are treated as <code>0</code>.</p>
+<p>The following code presents mass distribution and a histogram of
+discrete probability distributions supported by the package.
+This compares output of <code>draw</code> and <code>log_pdf</code> functions for the same distribution.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs44', 108)" onmouseover="showTip(event, 'fs44', 108)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 109)" onmouseover="showTip(event, 'fs5', 109)" class="i">d</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 110)" onmouseover="showTip(event, 'fs8', 110)" class="i">n</span>, <span onmouseout="hideTip(event, 'fs9', 111)" onmouseover="showTip(event, 'fs9', 111)" class="i">k</span>, <span onmouseout="hideTip(event, 'fs10', 112)" onmouseover="showTip(event, 'fs10', 112)" class="i">mt</span> <span class="o">=</span> <span class="n">20</span>, <span class="n">20480</span>, <span onmouseout="hideTip(event, 'fs11', 113)" onmouseover="showTip(event, 'fs11', 113)" class="t">MT19937</span>()
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 114)" onmouseover="showTip(event, 'fs12', 114)" class="i">h</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 115)" onmouseover="showTip(event, 'fs23', 115)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs45', 116)" onmouseover="showTip(event, 'fs45', 116)" class="f">create</span> (<span onmouseout="hideTip(event, 'fs8', 117)" onmouseover="showTip(event, 'fs8', 117)" class="i">n</span><span class="o">+</span><span class="n">1</span>) <span class="n">0</span>
+    <span onmouseout="hideTip(event, 'fs46', 118)" onmouseover="showTip(event, 'fs46', 118)" class="i">seq</span> {<span class="n">1..</span><span onmouseout="hideTip(event, 'fs9', 119)" onmouseover="showTip(event, 'fs9', 119)" class="i">k</span>} <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs13', 120)" onmouseover="showTip(event, 'fs13', 120)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs47', 121)" onmouseover="showTip(event, 'fs47', 121)" class="f">iter</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 122)" onmouseover="showTip(event, 'fs18', 122)" class="i">i</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs48', 123)" onmouseover="showTip(event, 'fs48', 123)" class="f">int</span>(<span onmouseout="hideTip(event, 'fs15', 124)" onmouseover="showTip(event, 'fs15', 124)" class="f">draw</span> <span onmouseout="hideTip(event, 'fs10', 125)" onmouseover="showTip(event, 'fs10', 125)" class="i">mt</span> <span onmouseout="hideTip(event, 'fs5', 126)" onmouseover="showTip(event, 'fs5', 126)" class="i">d</span>) <span class="k">in</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 127)" onmouseover="showTip(event, 'fs18', 127)" class="i">i</span><span class="o">&lt;=</span><span onmouseout="hideTip(event, 'fs8', 128)" onmouseover="showTip(event, 'fs8', 128)" class="i">n</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs12', 129)" onmouseover="showTip(event, 'fs12', 129)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 130)" onmouseover="showTip(event, 'fs18', 130)" class="i">i</span>] <span class="o">&lt;-</span> <span onmouseout="hideTip(event, 'fs12', 131)" onmouseover="showTip(event, 'fs12', 131)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 132)" onmouseover="showTip(event, 'fs18', 132)" class="i">i</span>]<span class="o">+</span><span class="n">1</span>)
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 133)" onmouseover="showTip(event, 'fs17', 133)" class="i">xh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 134)" onmouseover="showTip(event, 'fs18', 134)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 135)" onmouseover="showTip(event, 'fs8', 135)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
+                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 136)" onmouseover="showTip(event, 'fs18', 136)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs49', 137)" onmouseover="showTip(event, 'fs49', 137)" class="i">nan</span> 
+                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs19', 138)" onmouseover="showTip(event, 'fs19', 138)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs18', 139)" onmouseover="showTip(event, 'fs18', 139)" class="i">i</span><span class="o">/</span><span class="n">3</span>)|]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 140)" onmouseover="showTip(event, 'fs20', 140)" class="i">yh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 141)" onmouseover="showTip(event, 'fs18', 141)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 142)" onmouseover="showTip(event, 'fs8', 142)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
+                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 143)" onmouseover="showTip(event, 'fs18', 143)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.</span> 
+                <span class="k">elif</span> <span onmouseout="hideTip(event, 'fs18', 144)" onmouseover="showTip(event, 'fs18', 144)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">1</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs19', 145)" onmouseover="showTip(event, 'fs19', 145)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs12', 146)" onmouseover="showTip(event, 'fs12', 146)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 147)" onmouseover="showTip(event, 'fs18', 147)" class="i">i</span><span class="o">/</span><span class="n">3</span>])<span class="o">/</span><span onmouseout="hideTip(event, 'fs19', 148)" onmouseover="showTip(event, 'fs19', 148)" class="f">float</span> <span onmouseout="hideTip(event, 'fs9', 149)" onmouseover="showTip(event, 'fs9', 149)" class="i">k</span> 
+                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs49', 150)" onmouseover="showTip(event, 'fs49', 150)" class="i">nan</span> |]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 151)" onmouseover="showTip(event, 'fs22', 151)" class="i">ypdf</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 152)" onmouseover="showTip(event, 'fs23', 152)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs50', 153)" onmouseover="showTip(event, 'fs50', 153)" class="f">mapi</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs18', 154)" onmouseover="showTip(event, 'fs18', 154)" class="i">i</span> <span onmouseout="hideTip(event, 'fs25', 155)" onmouseover="showTip(event, 'fs25', 155)" class="i">x</span> <span class="k">-&gt;</span>
+        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 156)" onmouseover="showTip(event, 'fs18', 156)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.0</span> <span class="k">else</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 157)" onmouseover="showTip(event, 'fs18', 157)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs49', 158)" onmouseover="showTip(event, 'fs49', 158)" class="i">nan</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs26', 159)" onmouseover="showTip(event, 'fs26', 159)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs27', 160)" onmouseover="showTip(event, 'fs27', 160)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs5', 161)" onmouseover="showTip(event, 'fs5', 161)" class="i">d</span> <span onmouseout="hideTip(event, 'fs25', 162)" onmouseover="showTip(event, 'fs25', 162)" class="i">x</span>)) <span onmouseout="hideTip(event, 'fs17', 163)" onmouseover="showTip(event, 'fs17', 163)" class="i">xh</span>
+    <span onmouseout="hideTip(event, 'fs28', 164)" onmouseover="showTip(event, 'fs28', 164)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 165)" onmouseover="showTip(event, 'fs29', 165)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs30', 166)" onmouseover="showTip(event, 'fs30', 166)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 167)" onmouseover="showTip(event, 'fs31', 167)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 168)" onmouseover="showTip(event, 'fs17', 168)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs22', 169)" onmouseover="showTip(event, 'fs22', 169)" class="i">ypdf</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
+                  <span onmouseout="hideTip(event, 'fs30', 170)" onmouseover="showTip(event, 'fs30', 170)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 171)" onmouseover="showTip(event, 'fs31', 171)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 172)" onmouseover="showTip(event, 'fs17', 172)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs20', 173)" onmouseover="showTip(event, 'fs20', 173)" class="i">yh</span>)]
+</code></pre></td>
+</tr>
+</table>
+<h3><a name="Bernoulli" class="anchor" href="#Bernoulli">Bernoulli</a></h3>
+<p><code>Bernoulli(mean)</code> denotes distribution of a yes/no experiment (1 or 0) which yields success with probability <code>mean</code>.
+Note that <code>log_pdf</code> function returns the same value for all 'x &gt; 0.5';</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs51', 174)" onmouseover="showTip(event, 'fs51', 174)" class="i">chart_bernoulli</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 175)" onmouseover="showTip(event, 'fs5', 175)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs52', 176)" onmouseover="showTip(event, 'fs52', 176)" class="p">Bernoulli</span>(<span class="n">0.7</span>)
+    <span onmouseout="hideTip(event, 'fs44', 177)" onmouseover="showTip(event, 'fs44', 177)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 178)" onmouseover="showTip(event, 'fs5', 178)" class="i">d</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_0ec6ec82fc734b9d870339e706fdd358 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAAA0MzMzMzPTPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/AAAAAAAAAABmZmZmZmbmPwAAAAAAAPj/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAAAzMzMzM+PSPwAAAAAAAPj/AAAAAAAAAABmZmZmZo7mPwAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_0ec6ec82fc734b9d870339e706fdd358');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_0ec6ec82fc734b9d870339e706fdd358);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_0ec6ec82fc734b9d870339e706fdd358" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Binomial" class="anchor" href="#Binomial">Binomial</a></h3>
+<p><code>Binomial(n, p)</code> is a number of successes
+in a sequence of <code>n</code> independent yes/no experiments, each of which yields success with probability <code>p</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs53', 179)" onmouseover="showTip(event, 'fs53', 179)" class="i">chart_binomial</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 180)" onmouseover="showTip(event, 'fs5', 180)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs54', 181)" onmouseover="showTip(event, 'fs54', 181)" class="p">Binomial</span>(<span class="n">20</span>, <span class="n">0.7</span>)
+    <span onmouseout="hideTip(event, 'fs44', 182)" onmouseover="showTip(event, 'fs44', 182)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 183)" onmouseover="showTip(event, 'fs5', 183)" class="i">d</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_da480fae771b4b85a0452a0918b4b436 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAAAvYG15NivDPQAAAAAAAPj/AAAAAAAAAAC3gb8bWvQbPgAAAAAAAPj/AAAAAAAAAADK/Y3AQ11jPgAAAAAAAPj/AAAAAAAAAAASPnxIm/GgPgAAAAAAAPj/AAAAAAAAAACkVy8n0wDVPgAAAAAAAPj/AAAAAAAAAABfHhutXpoDPwAAAAAAAPj/AAAAAAAAAAAfN3K8dJYsPwAAAAAAAPj/AAAAAAAAAADBSu1tGa1QPwAAAAAAAPj/AAAAAAAAAACriLw1gJ1vPwAAAAAAAPj/AAAAAAAAAACo+Ofw8ZaIPwAAAAAAAPj/AAAAAAAAAAB6B39Kg46fPwAAAAAAAPj/AAAAAAAAAABqFyxSD7ywPwAAAAAAAPj/AAAAAAAAAADRKM3PGkm9PwAAAAAAAPj/AAAAAAAAAADO9T1niQbFPwAAAAAAAPj/AAAAAAAAAABzSchNoIfIPwAAAAAAAPj/AAAAAAAAAAC/iFQE/OTGPwAAAAAAAPj/AAAAAAAAAAAn+dJtorHAPwAAAAAAAPj/AAAAAAAAAACmJWVGnlSyPwAAAAAAAPj/AAAAAAAAAAChAUjfoIOcPwAAAAAAAPj/AAAAAAAAAAASIYGTkAN8PwAAAAAAAPj/AAAAAAAAAADJDQHfdSVKPwAAAAAAAPj/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAzMzMzMzMjPwAAAAAAAPj/AAAAAAAAAACamZmZmZlRPwAAAAAAAPj/AAAAAAAAAABmZmZmZmZwPwAAAAAAAPj/AAAAAAAAAAAzMzMzMzOEPwAAAAAAAPj/AAAAAAAAAACamZmZmdmfPwAAAAAAAPj/AAAAAAAAAADNzMzMzFyxPwAAAAAAAPj/AAAAAAAAAACamZmZmcm8PwAAAAAAAPj/AAAAAAAAAABmZmZmZi7FPwAAAAAAAPj/AAAAAAAAAAAzMzMzM0PIPwAAAAAAAPj/AAAAAAAAAABmZmZmZg7HPwAAAAAAAPj/AAAAAAAAAACamZmZmSnBPwAAAAAAAPj/AAAAAAAAAACamZmZmbmxPwAAAAAAAPj/AAAAAAAAAACamZmZmRmcPwAAAAAAAPj/AAAAAAAAAAAzMzMzMzN8PwAAAAAAAPj/AAAAAAAAAAAAAAAAAABIPwAAAAAAAPj/"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_da480fae771b4b85a0452a0918b4b436');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_da480fae771b4b85a0452a0918b4b436);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_da480fae771b4b85a0452a0918b4b436" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Negative-binomial-distribution" class="anchor" href="#Negative-binomial-distribution">Negative binomial distribution</a></h3>
+<p><code>NegativeBinomial(mean, r)</code> is a number of successes before a given number of failures <code>r</code>
+in a sequence of yes/no experiments, each of which yields success with probability <code>p = mean/(mean+r)</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs55', 184)" onmouseover="showTip(event, 'fs55', 184)" class="i">chart_negative_binomial</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 185)" onmouseover="showTip(event, 'fs5', 185)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs56', 186)" onmouseover="showTip(event, 'fs56', 186)" class="p">NegativeBinomial</span>(<span class="n">5.7</span>, <span class="n">7.5</span>)
+    <span onmouseout="hideTip(event, 'fs44', 187)" onmouseover="showTip(event, 'fs44', 187)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 188)" onmouseover="showTip(event, 'fs5', 188)" class="i">d</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_48cf3cdf8a5f479d9c593003749ab1a3 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAADNy3dt1YKNPwAAAAAAAPj/AAAAAAAAAAB3oUT81uSnPwAAAAAAAPj/AAAAAAAAAAAVtAdG5ey1PwAAAAAAAPj/AAAAAAAAAAAHgauiNfu9PwAAAAAAAPj/AAAAAAAAAADE7TEgA/7APwAAAAAAAPj/AAAAAAAAAADxrY5gWuDAPwAAAAAAAPj/AAAAAAAAAABtK9LKXF2+PwAAAAAAAPj/AAAAAAAAAADLall/mEm5PwAAAAAAAPj/AAAAAAAAAAD+WGYsscqzPwAAAAAAAPj/AAAAAAAAAAAo4NiSEHCtPwAAAAAAAPj/AAAAAAAAAABNuW01cvmkPwAAAAAAAPj/AAAAAAAAAACzGKYEcdGcPwAAAAAAAPj/AAAAAAAAAACLe/HfTi+TPwAAAAAAAPj/AAAAAAAAAAC9SEpcYNqIPwAAAAAAAPj/AAAAAAAAAACTdRZk7W1/PwAAAAAAAPj/AAAAAAAAAADsGcH98HNzPwAAAAAAAPj/AAAAAAAAAACjVnQLFaBnPwAAAAAAAPj/AAAAAAAAAADMC8QqgTRcPwAAAAAAAPj/AAAAAAAAAAAuu22q3pNQPwAAAAAAAPj/AAAAAAAAAADgjHPoBzdDPwAAAAAAAPj/AAAAAAAAAABfP3297/w1PwAAAAAAAPj/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAADNzMzMzMyPPwAAAAAAAPj/AAAAAAAAAADNzMzMzCyoPwAAAAAAAPj/AAAAAAAAAACamZmZmXm2PwAAAAAAAPj/AAAAAAAAAAAzMzMzM2O9PwAAAAAAAPj/AAAAAAAAAACamZmZmTnBPwAAAAAAAPj/AAAAAAAAAAAAAAAAADjBPwAAAAAAAPj/AAAAAAAAAABmZmZmZra9PwAAAAAAAPj/AAAAAAAAAACamZmZmdm4PwAAAAAAAPj/AAAAAAAAAABmZmZmZmazPwAAAAAAAPj/AAAAAAAAAADNzMzMzEytPwAAAAAAAPj/AAAAAAAAAABmZmZmZialPwAAAAAAAPj/AAAAAAAAAABmZmZmZmabPwAAAAAAAPj/AAAAAAAAAAAAAAAAAICSPwAAAAAAAPj/AAAAAAAAAAAzMzMzM7OKPwAAAAAAAPj/AAAAAAAAAADNzMzMzEyBPwAAAAAAAPj/AAAAAAAAAABmZmZmZmZzPwAAAAAAAPj/AAAAAAAAAABmZmZmZmZqPwAAAAAAAPj/AAAAAAAAAAAzMzMzMzNXPwAAAAAAAPj/AAAAAAAAAABmZmZmZmZWPwAAAAAAAPj/AAAAAAAAAABmZmZmZmY2PwAAAAAAAPj/AAAAAAAAAADNzMzMzMw8PwAAAAAAAPj/"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_48cf3cdf8a5f479d9c593003749ab1a3');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_48cf3cdf8a5f479d9c593003749ab1a3);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_48cf3cdf8a5f479d9c593003749ab1a3" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Poisson" class="anchor" href="#Poisson">Poisson</a></h3>
+<p><code>Poisson(mean)</code> is a number of events occuring in a fixed interval of time if these events occur with a known average rate = <code>mean</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs57', 189)" onmouseover="showTip(event, 'fs57', 189)" class="i">chart_poisson</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 190)" onmouseover="showTip(event, 'fs5', 190)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs58', 191)" onmouseover="showTip(event, 'fs58', 191)" class="p">Poisson</span>(<span class="n">5.7</span>)
+    <span onmouseout="hideTip(event, 'fs44', 192)" onmouseover="showTip(event, 'fs44', 192)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 193)" onmouseover="showTip(event, 'fs5', 193)" class="i">d</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_58d2a5448d6d40adac0000bebe5887d4 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAABYDNSG/2hrPwAAAAAAAPj/AAAAAAAAAACYFXd2nIeTPwAAAAAAAPj/AAAAAAAAAABdGNAoctSrPwAAAAAAAPj/AAAAAAAAAABcSl9AOXC6PwAAAAAAAPj/AAAAAAAAAACRft39W9bCPwAAAAAAAPj/AAAAAAAAAACQ8blZfXnFPwAAAAAAAPj/AAAAAAAAAACy2KN7nWbEPwAAAAAAAPj/AAAAAAAAAAAEVaZvs5zAPwAAAAAAAPj/AAAAAAAAAACQn+ZLGay3PwAAAAAAAPj/AAAAAAAAAABHys4KIPytPwAAAAAAAPj/AAAAAAAAAACB1B4vZBehPwAAAAAAAPj/AAAAAAAAAAAHqY8Zf7aRPwAAAAAAAPj/AAAAAAAAAABqrXuLxdOAPwAAAAAAAPj/AAAAAAAAAADctaUzK4NtPwAAAAAAAPj/AAAAAAAAAAA36JHkEAhYPwAAAAAAAPj/AAAAAAAAAAA8pmT1kUNCPwAAAAAAAPj/AAAAAAAAAAD4bK/9rwYqPwAAAAAAAPj/AAAAAAAAAADgG+5563MRPwAAAAAAAPj/AAAAAAAAAAAFvU94XRv2PgAAAAAAAPj/AAAAAAAAAAD6Fcb2PIfaPgAAAAAAAPj/AAAAAAAAAACrslzwAj6+PgAAAAAAAPj/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAA8D8AAAAAAADwPwAAAAAAAPj/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAPj/AAAAAAAACEAAAAAAAAAIQAAAAAAAAPj/AAAAAAAAEEAAAAAAAAAQQAAAAAAAAPj/AAAAAAAAFEAAAAAAAAAUQAAAAAAAAPj/AAAAAAAAGEAAAAAAAAAYQAAAAAAAAPj/AAAAAAAAHEAAAAAAAAAcQAAAAAAAAPj/AAAAAAAAIEAAAAAAAAAgQAAAAAAAAPj/AAAAAAAAIkAAAAAAAAAiQAAAAAAAAPj/AAAAAAAAJEAAAAAAAAAkQAAAAAAAAPj/AAAAAAAAJkAAAAAAAAAmQAAAAAAAAPj/AAAAAAAAKEAAAAAAAAAoQAAAAAAAAPj/AAAAAAAAKkAAAAAAAAAqQAAAAAAAAPj/AAAAAAAALEAAAAAAAAAsQAAAAAAAAPj/AAAAAAAALkAAAAAAAAAuQAAAAAAAAPj/AAAAAAAAMEAAAAAAAAAwQAAAAAAAAPj/AAAAAAAAMUAAAAAAAAAxQAAAAAAAAPj/AAAAAAAAMkAAAAAAAAAyQAAAAAAAAPj/AAAAAAAAM0AAAAAAAAAzQAAAAAAAAPj/AAAAAAAANEAAAAAAAAA0QAAAAAAAAPj/",
+        "y:double array": "AAAAAAAAAABmZmZmZmZuPwAAAAAAAPj/AAAAAAAAAAAzMzMzMzOTPwAAAAAAAPj/AAAAAAAAAAAAAAAAAECtPwAAAAAAAPj/AAAAAAAAAABmZmZmZka6PwAAAAAAAPj/AAAAAAAAAACamZmZmRnDPwAAAAAAAPj/AAAAAAAAAADNzMzMzMzFPwAAAAAAAPj/AAAAAAAAAABmZmZmZjbEPwAAAAAAAPj/AAAAAAAAAACamZmZmYnAPwAAAAAAAPj/AAAAAAAAAAAzMzMzM8O2PwAAAAAAAPj/AAAAAAAAAACamZmZmTmuPwAAAAAAAPj/AAAAAAAAAADNzMzMzIygPwAAAAAAAPj/AAAAAAAAAAAzMzMzMzORPwAAAAAAAPj/AAAAAAAAAADNzMzMzMx/PwAAAAAAAPj/AAAAAAAAAABmZmZmZmZwPwAAAAAAAPj/AAAAAAAAAACamZmZmZlVPwAAAAAAAPj/AAAAAAAAAACamZmZmZlBPwAAAAAAAPj/AAAAAAAAAACamZmZmZk5PwAAAAAAAPj/AAAAAAAAAACamZmZmZkJPwAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPj/"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_58d2a5448d6d40adac0000bebe5887d4');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_58d2a5448d6d40adac0000bebe5887d4);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_58d2a5448d6d40adac0000bebe5887d4" class="viewer-container">
+    </div>
+</section>
+
+<h2><a name="Mixture" class="anchor" href="#Mixture">Mixture</a></h2>
+<p><code>Mixture([w1,d1; w2,d2; ...])</code>, where w1, w2, ... - weights (real numbers) and d1, d2, ... - distributions.
+The list must not be empty and sum of the weights must be equal to one.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs59', 194)" onmouseover="showTip(event, 'fs59', 194)" class="i">chart_mixture</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 195)" onmouseover="showTip(event, 'fs5', 195)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs60', 196)" onmouseover="showTip(event, 'fs60', 196)" class="p">Mixture</span>([<span class="n">0.9</span>,<span onmouseout="hideTip(event, 'fs37', 197)" onmouseover="showTip(event, 'fs37', 197)" class="p">Normal</span>(<span class="n">37.</span>,<span class="n">9.</span>); <span class="n">0.1</span>,<span onmouseout="hideTip(event, 'fs33', 198)" onmouseover="showTip(event, 'fs33', 198)" class="p">Uniform</span>(<span class="n">15.</span>,<span class="n">20.</span>)])
+    <span onmouseout="hideTip(event, 'fs4', 199)" onmouseover="showTip(event, 'fs4', 199)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 200)" onmouseover="showTip(event, 'fs5', 200)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_373e67dd61494891910cc520c3feaa41 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAAJEAAAAAAANgkQAAAAAAAsCVAAAAAAACIJkAAAAAAAGAnQAAAAAAAOChAAAAAAAAQKUAAAAAAAOgpQAAAAAAAwCpAAAAAAACYK0AAAAAAAHAsQAAAAAAASC1AAAAAAAAgLkAAAAAAAPguQAAAAAAA0C9AAAAAAABUMEAAAAAAAMAwQAAAAAAALDFAAAAAAACYMUAAAAAAAAQyQAAAAAAAcDJAAAAAAADcMkAAAAAAAEgzQAAAAAAAtDNAAAAAAAAgNEAAAAAAAIw0QAAAAAAA+DRAAAAAAABkNUAAAAAAANA1QAAAAAAAPDZAAAAAAACoNkAAAAAAABQ3QAAAAAAAgDdAAAAAAADsN0AAAAAAAFg4QAAAAAAAxDhAAAAAAAAwOUAAAAAAAJw5QAAAAAAACDpAAAAAAAB0OkAAAAAAAOA6QAAAAAAATDtAAAAAAAC4O0AAAAAAACQ8QAAAAAAAkDxAAAAAAAD8PEAAAAAAAGg9QAAAAAAA1D1AAAAAAABAPkAAAAAAAKw+QAAAAAAAGD9AAAAAAACEP0AAAAAAAPA/QAAAAAAALkBAAAAAAABkQEAAAAAAAJpAQAAAAAAA0EBAAAAAAAAGQUAAAAAAADxBQAAAAAAAckFAAAAAAACoQUAAAAAAAN5BQAAAAAAAFEJAAAAAAABKQkAAAAAAAIBCQAAAAAAAtkJAAAAAAADsQkAAAAAAACJDQAAAAAAAWENAAAAAAACOQ0AAAAAAAMRDQAAAAAAA+kNAAAAAAAAwREAAAAAAAGZEQAAAAAAAnERAAAAAAADSREAAAAAAAAhFQAAAAAAAPkVAAAAAAAB0RUAAAAAAAKpFQAAAAAAA4EVAAAAAAAAWRkAAAAAAAExGQAAAAAAAgkZAAAAAAAC4RkAAAAAAAO5GQAAAAAAAJEdAAAAAAABaR0AAAAAAAJBHQAAAAAAAxkdAAAAAAAD8R0AAAAAAADJIQAAAAAAAaEhAAAAAAACeSEAAAAAAANRIQAAAAAAACklAAAAAAABASUAAAAAAAHZJQAAAAAAArElAAAAAAADiSUAAAAAAABhKQAAAAAAATkpAAAAAAACESkAAAAAAALpKQAAAAAAA8EpAAAAAAAAmS0AAAAAAAFxLQAAAAAAAkktAAAAAAADIS0AAAAAAAP5LQAAAAAAANExAAAAAAABqTEAAAAAAAKBMQAAAAAAA1kxAAAAAAAAMTUAAAAAAAEJNQAAAAAAAeE1AAAAAAACuTUAAAAAAAORNQAAAAAAAGk5AAAAAAABQTkAAAAAAAIZOQAAAAAAAvE5AAAAAAADyTkAAAAAAAChPQAAAAAAAXk9AAAAAAACUT0AAAAAAAMpPQAAAAAAAAFBA",
+        "y:double array": "d4olZmgLPT9FjoE5WrJAPza3vKqPJ0M/eit0zgvtRT+2BDYaFQtJP6+Zs/2Bikw/p+7uDVw6UD9rVzLd1GlSP9XBfZjo2FQ/W0hOERWNVz8BlXwmFIxaP6Bou97V210/M/6q2QiTlj8RSKR2RdOWP4xHkIq6GZc/whPPI89mlz8CCFR66rqXPxEFfv9yFpg/ESf2VM15mD8fu3QrW+WYP1ToyAp6WZk/kmoDBYLWmT+H9i1XxFyaP80dhfqJ7Jo/Y5EkiMMsfD81Hhxavrp+PwoC8ASYuIA/Yg29GD4ogj/1bdWjY6yDP6bZr2/4RIU/rJn/Gcfxhj8bPgiOcrKIP6P9HL5zhoo/GHNNqhdtjD/qtAjBfWWOPxybA1NLN5A/uJSItZFDkT/cnJyi2laSP6tq8eNWcJM/nPe01h+PlD/D0sEZOLKVP41qvIeM2JY/yAkafvUAmD8nEuZwOCqZP8s34skJU5o/ZZ9cEA96mz8LvtBV4Z2cP1oYJOIPvZ0/ICAVGSPWnj/PMkeRn+efP5PnIKoEeKA/SnrgnvP2oD+yq+8342+hP5wWe+ge4qE/HlHHw/hMoj+SPTk0y6+iP2aCZ6X6CaM/G5A8G/daoz+S31mwPaKjPwuKMfZZ36M/WzaqMecRpD+gKJlvkTmkP6UM7WwWVqQ/hlAHT0ZnpD/ZkXYpBG2kP4ZQB09GZ6Q/pQztbBZWpD+gKJlvkTmkP1s2qjHnEaQ/C4ox9lnfoz+S31mwPaKjPxuQPBv3WqM/ZoJnpfoJoz+SPTk0y6+iPx5Rx8P4TKI/nBZ76B7ioT+yq+8342+hP0p64J7z9qA/k+cgqgR4oD/PMkeRn+efPyAgFRkj1p4/Whgk4g+9nT8LvtBV4Z2cP2WfXBAPeps/yzfiyQlTmj8nEuZwOCqZP8gJGn71AJg/jWq8h4zYlj/D0sEZOLKVP5z3tNYfj5Q/q2rx41Zwkz/cnJyi2laSP7iUiLWRQ5E/HJsDU0s3kD/qtAjBfWWOPxhzTaoXbYw/o/0cvnOGij8bPgiOcrKIP6yZ/xnH8YY/ptmvb/hEhT/1bdWjY6yDP2INvRg+KII/CgLwBJi4gD81Hhxavrp+P2ORJIjDLHw/QSVcy6LGeT8yiP89jId3P19YVfWCbnU/YE9rDGN6cz+NmhqP56lxP6qUQGpg928/sIR/vo3cbD84nC+VSQBqPyv6B+FuX2c/gZgRF8r2ZD+rnLF3IcNiP7ZN5488wWA/oGi73tXbXT8BlXwmFIxaP1tIThEVjVc/1cF9mOjYVD9rVzLd1GlSP6fu7g1cOlA/r5mz/YGKTD+2BDYaFQtJP3ordM4L7UU/Nre8qo8nQz9FjoE5WrJAP3eKJWZoCz0/"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.0/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_373e67dd61494891910cc520c3feaa41');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_373e67dd61494891910cc520c3feaa41);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_373e67dd61494891910cc520c3feaa41" class="viewer-container">
+    </div>
+</section>
+
+
+<div class="tip" id="fs1">namespace Angara</div>
+<div class="tip" id="fs2">module Statistics<br /><br />from Angara</div>
+<div class="tip" id="fs3">namespace Angara.Charting</div>
+<div class="tip" id="fs4">val chart : d:Distribution -&gt; xmin:float -&gt; xmax:float -&gt; Chart<br /><br />Full name: Distributions.chart</div>
+<div class="tip" id="fs5">val d : Distribution</div>
+<div class="tip" id="fs6">val xmin : float</div>
+<div class="tip" id="fs7">val xmax : float</div>
+<div class="tip" id="fs8">val n : int</div>
+<div class="tip" id="fs9">val k : int</div>
+<div class="tip" id="fs10">val mt : MT19937</div>
+<div class="tip" id="fs11">Multiple items<br />type MT19937 =<br />&#160;&#160;new : copy:MT19937 -&gt; MT19937<br />&#160;&#160;new : seed:uint32 [] -&gt; MT19937<br />&#160;&#160;new : ?seed:uint32 -&gt; MT19937<br />&#160;&#160;private new : mt:uint32 [] * idx:int -&gt; MT19937<br />&#160;&#160;member bernoulli : p:float -&gt; bool<br />&#160;&#160;member private getIdx : int<br />&#160;&#160;member private getMt : uint32 []<br />&#160;&#160;member get_seed : unit -&gt; uint32 []<br />&#160;&#160;member normal : unit -&gt; float<br />&#160;&#160;member uniform_float64 : unit -&gt; float<br />&#160;&#160;...<br /><br />Full name: Angara.Statistics.MT19937<br /><br />--------------------<br />new : ?seed:uint32 -&gt; MT19937<br />new : seed:uint32 [] -&gt; MT19937<br />new : copy:MT19937 -&gt; MT19937</div>
+<div class="tip" id="fs12">val h : int []</div>
+<div class="tip" id="fs13">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs14">val init : count:int -&gt; initializer:(int -&gt; &#39;T) -&gt; seq&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.init</div>
+<div class="tip" id="fs15">val draw : gen:MT19937 -&gt; d:Distribution -&gt; float<br /><br />Full name: Angara.Statistics.draw</div>
+<div class="tip" id="fs16">val histogram_ : n:int -&gt; xmin:float -&gt; xmax:float -&gt; xs:seq&lt;float&gt; -&gt; int []<br /><br />Full name: Angara.Statistics.histogram_</div>
+<div class="tip" id="fs17">val xh : float []</div>
+<div class="tip" id="fs18">val i : int</div>
+<div class="tip" id="fs19">Multiple items<br />val float : value:&#39;T -&gt; float (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.float<br /><br />--------------------<br />type float = System.Double<br /><br />Full name: Microsoft.FSharp.Core.float<br /><br />--------------------<br />type float&lt;&#39;Measure&gt; = float<br /><br />Full name: Microsoft.FSharp.Core.float&lt;_&gt;</div>
+<div class="tip" id="fs20">val yh : float []</div>
+<div class="tip" id="fs21">val xpdf : float []</div>
+<div class="tip" id="fs22">val ypdf : float []</div>
+<div class="tip" id="fs23">module Array<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs24">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; array:&#39;T [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.map</div>
+<div class="tip" id="fs25">val x : float</div>
+<div class="tip" id="fs26">val exp : value:&#39;T -&gt; &#39;T (requires member Exp)<br /><br />Full name: Microsoft.FSharp.Core.Operators.exp</div>
+<div class="tip" id="fs27">val log_pdf : d:Distribution -&gt; v:float -&gt; float<br /><br />Full name: Angara.Statistics.log_pdf</div>
+<div class="tip" id="fs28">type Chart =<br />&#160;&#160;{Plots: PlotInfo list;}<br />&#160;&#160;static member ofList : plots:PlotInfo list -&gt; Chart<br /><br />Full name: Angara.Charting.Chart</div>
+<div class="tip" id="fs29">static member Chart.ofList : plots:PlotInfo list -&gt; Chart</div>
+<div class="tip" id="fs30">type Plot =<br />&#160;&#160;private new : unit -&gt; Plot<br />&#160;&#160;static member band : seriesX:float [] * seriesY1:float [] * seriesY2:float [] * ?fill:string * ?displayName:string * ?titles:BandTitles -&gt; PlotInfo<br />&#160;&#160;static member heatmap : x:float [] * y:float [] * values:float [] * ?colorPalette:string * ?treatAs:HeatmapTreatAs * ?displayName:string * ?titles:HeatmapTitles -&gt; PlotInfo<br />&#160;&#160;static member heatmap : x:float [] * y:float [] * values:HeatmapValues * ?colorPalette:string * ?treatAs:HeatmapTreatAs * ?displayName:string * ?titles:HeatmapTitles -&gt; PlotInfo<br />&#160;&#160;static member line : seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member line : seriesX:float [] * seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member line : x:LineX * y:LineY * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />&#160;&#160;static member markers : seriesX:float [] * seriesY:float [] * ?color:MarkersColor * ?colorPalette:string * ?size:MarkersSize * ?sizeRange:MarkersSizeRange * ?shape:MarkersShape * ?borderColor:string * ?displayName:string * ?titles:MarkersTitles -&gt; PlotInfo<br />&#160;&#160;static member markers : x:MarkersX * y:MarkersY * ?color:MarkersColor * ?colorPalette:string * ?size:MarkersSize * ?sizeRange:MarkersSizeRange * ?shape:MarkersShape * ?borderColor:string * ?displayName:string * ?titles:MarkersTitles -&gt; PlotInfo<br /><br />Full name: Angara.Charting.Plot</div>
+<div class="tip" id="fs31">static member Plot.line : seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />static member Plot.line : seriesX:float [] * seriesY:float [] * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo<br />static member Plot.line : x:LineX * y:LineY * ?stroke:string * ?thickness:float * ?treatAs:LineTreatAs * ?fill68:string * ?fill95:string * ?displayName:string * ?titles:LineTitles -&gt; PlotInfo</div>
+<div class="tip" id="fs32">val chart_uniform : Chart<br /><br />Full name: Distributions.chart_uniform</div>
+<div class="tip" id="fs33">union case Distribution.Uniform: float * float -&gt; Distribution</div>
+<div class="tip" id="fs34">val chart_loguniform : Chart<br /><br />Full name: Distributions.chart_loguniform</div>
+<div class="tip" id="fs35">union case Distribution.LogUniform: float * float -&gt; Distribution</div>
+<div class="tip" id="fs36">val chart_normal : Chart<br /><br />Full name: Distributions.chart_normal</div>
+<div class="tip" id="fs37">union case Distribution.Normal: float * float -&gt; Distribution</div>
+<div class="tip" id="fs38">val chart_lognormal : Chart<br /><br />Full name: Distributions.chart_lognormal</div>
+<div class="tip" id="fs39">union case Distribution.LogNormal: float * float -&gt; Distribution</div>
+<div class="tip" id="fs40">val chart_exponential : Chart<br /><br />Full name: Distributions.chart_exponential</div>
+<div class="tip" id="fs41">union case Distribution.Exponential: mean: float -&gt; Distribution</div>
+<div class="tip" id="fs42">val chart_gamma : Chart<br /><br />Full name: Distributions.chart_gamma</div>
+<div class="tip" id="fs43">union case Distribution.Gamma: float * float -&gt; Distribution</div>
+<div class="tip" id="fs44">val discrete_chart : d:Distribution -&gt; Chart<br /><br />Full name: Distributions.discrete_chart</div>
+<div class="tip" id="fs45">val create : count:int -&gt; value:&#39;T -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Array.create</div>
+<div class="tip" id="fs46">Multiple items<br />val seq : sequence:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Core.Operators.seq<br /><br />--------------------<br />type seq&lt;&#39;T&gt; = System.Collections.Generic.IEnumerable&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.seq&lt;_&gt;</div>
+<div class="tip" id="fs47">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit<br /><br />Full name: Microsoft.FSharp.Collections.Seq.iter</div>
+<div class="tip" id="fs48">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.int<br /><br />--------------------<br />type int = int32<br /><br />Full name: Microsoft.FSharp.Core.int<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int<br /><br />Full name: Microsoft.FSharp.Core.int&lt;_&gt;</div>
+<div class="tip" id="fs49">val nan : float<br /><br />Full name: Microsoft.FSharp.Core.Operators.nan</div>
+<div class="tip" id="fs50">val mapi : mapping:(int -&gt; &#39;T -&gt; &#39;U) -&gt; array:&#39;T [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.mapi</div>
+<div class="tip" id="fs51">val chart_bernoulli : Chart<br /><br />Full name: Distributions.chart_bernoulli</div>
+<div class="tip" id="fs52">union case Distribution.Bernoulli: float -&gt; Distribution</div>
+<div class="tip" id="fs53">val chart_binomial : Chart<br /><br />Full name: Distributions.chart_binomial</div>
+<div class="tip" id="fs54">union case Distribution.Binomial: int * float -&gt; Distribution</div>
+<div class="tip" id="fs55">val chart_negative_binomial : Chart<br /><br />Full name: Distributions.chart_negative_binomial</div>
+<div class="tip" id="fs56">union case Distribution.NegativeBinomial: mean: float * r: float -&gt; Distribution</div>
+<div class="tip" id="fs57">val chart_poisson : Chart<br /><br />Full name: Distributions.chart_poisson</div>
+<div class="tip" id="fs58">union case Distribution.Poisson: mean: float -&gt; Distribution</div>
+<div class="tip" id="fs59">val chart_mixture : Chart<br /><br />Full name: Distributions.chart_mixture</div>
+<div class="tip" id="fs60">union case Distribution.Mixture: (float * Distribution) list -&gt; Distribution</div>
+
+        </div>
+        <div class="span3">
+          <!--<img src="/Angara.Statistics/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  -->
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">Angara.Statistics</li>
+            <li><a href="/Angara.Statistics/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/Angara.Statistics">Get library via NuGet</a></li>
+            <li><a href="http://github.com/microsoft/Angara.Statistics">Source code on GitHub</a></li>
+            <li><a href="/Angara.Statistics/license.html">License</a></li>
+            <li><a href="/Angara.Statistics/release-notes.html">Release notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/Angara.Statistics/tutorial.html">Probability distributions tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/Angara.Statistics/distributions.html">Supported probabilty distributions</a></li>
+            <li><a href="/Angara.Statistics/reference/index.html">API reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/microsoft/Angara.Statistics"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

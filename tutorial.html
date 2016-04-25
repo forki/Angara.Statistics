@@ -34,7 +34,8 @@
           
 <h3><a name="Distributions" class="anchor" href="#Distributions">Distributions</a></h3>
 <p>A <code>Distribution</code> is a value which allows to <code>draw</code> a pseudo-random number or compute a probability density function <code>log_pdf</code>.
-The <code>Distribution</code> discriminated union supports most common probability distributions like <code>Uniform</code> or <code>Normal</code>. More details are in a separate document page.</p>
+The <code>Distribution</code> discriminated union supports most common probability distributions like <code>Uniform</code> or <code>Normal</code>.
+More details are in a <a href="distributions.html">separate document page</a>.</p>
 <p>For example, here is how you define normal distribution once you've referenced Angara.Statistics.dll:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -105,6 +106,7 @@ If this number is not a power of two he number of points will be the next larger
 <span class="l">6: </span>
 <span class="l">7: </span>
 <span class="l">8: </span>
+<span class="l">9: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// estimate density curve in 16 points</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 34)" onmouseover="showTip(event, 'fs18', 34)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 35)" onmouseover="showTip(event, 'fs19', 35)" class="i">sampling_density_y</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 36)" onmouseover="showTip(event, 'fs20', 36)" class="f">kde</span> <span class="n">128</span> <span onmouseout="hideTip(event, 'fs16', 37)" onmouseover="showTip(event, 'fs16', 37)" class="i">samples</span>
@@ -112,17 +114,17 @@ If this number is not a power of two he number of points will be the next larger
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 38)" onmouseover="showTip(event, 'fs21', 38)" class="i">analytic_density_y</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs22', 39)" onmouseover="showTip(event, 'fs22', 39)" class="i">x</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs18', 40)" onmouseover="showTip(event, 'fs18', 40)" class="i">sampling_density_x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs23', 41)" onmouseover="showTip(event, 'fs23', 41)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs24', 42)" onmouseover="showTip(event, 'fs24', 42)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs3', 43)" onmouseover="showTip(event, 'fs3', 43)" class="i">distribution</span> <span onmouseout="hideTip(event, 'fs22', 44)" onmouseover="showTip(event, 'fs22', 44)" class="i">x</span>)|]
 
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 45)" onmouseover="showTip(event, 'fs1', 45)" class="i">Angara</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs25', 46)" onmouseover="showTip(event, 'fs25', 46)" class="i">Charting</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs26', 47)" onmouseover="showTip(event, 'fs26', 47)" class="i">chart</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs27', 48)" onmouseover="showTip(event, 'fs27', 48)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 49)" onmouseover="showTip(event, 'fs28', 49)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs29', 50)" onmouseover="showTip(event, 'fs29', 50)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 51)" onmouseover="showTip(event, 'fs30', 51)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 52)" onmouseover="showTip(event, 'fs18', 52)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs21', 53)" onmouseover="showTip(event, 'fs21', 53)" class="i">analytic_density_y</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
-                          <span onmouseout="hideTip(event, 'fs29', 54)" onmouseover="showTip(event, 'fs29', 54)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 55)" onmouseover="showTip(event, 'fs30', 55)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 56)" onmouseover="showTip(event, 'fs18', 56)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 57)" onmouseover="showTip(event, 'fs19', 57)" class="i">sampling_density_y</span>)]
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs26', 47)" onmouseover="showTip(event, 'fs26', 47)" class="i">chart</span> <span class="o">=</span> 
+    <span onmouseout="hideTip(event, 'fs27', 48)" onmouseover="showTip(event, 'fs27', 48)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 49)" onmouseover="showTip(event, 'fs28', 49)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs29', 50)" onmouseover="showTip(event, 'fs29', 50)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 51)" onmouseover="showTip(event, 'fs30', 51)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 52)" onmouseover="showTip(event, 'fs18', 52)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs21', 53)" onmouseover="showTip(event, 'fs21', 53)" class="i">analytic_density_y</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
+                  <span onmouseout="hideTip(event, 'fs29', 54)" onmouseover="showTip(event, 'fs29', 54)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 55)" onmouseover="showTip(event, 'fs30', 55)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs18', 56)" onmouseover="showTip(event, 'fs18', 56)" class="i">sampling_density_x</span>, <span onmouseout="hideTip(event, 'fs19', 57)" onmouseover="showTip(event, 'fs19', 57)" class="i">sampling_density_y</span>)]
 </code></pre></td>
 </tr>
 </table>
-<p>The output of the above script:</p>
 <section>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.1/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_08fa254f96464637a290e36331903b17 = {
+        var content_60031858cc8e46488452f4fbfecfb9df = {
   ":Chart": [
     {
       "displayName": "line",
@@ -175,13 +177,13 @@ If this number is not a power of two he number of points will be the next larger
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_08fa254f96464637a290e36331903b17');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_08fa254f96464637a290e36331903b17);
+            var viewer = document.getElementById('container_60031858cc8e46488452f4fbfecfb9df');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_60031858cc8e46488452f4fbfecfb9df);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_08fa254f96464637a290e36331903b17" class="viewer-container">
+    <div style="height:400px" id="container_60031858cc8e46488452f4fbfecfb9df" class="viewer-container">
     </div>
 </section>
 
@@ -263,6 +265,7 @@ If this number is not a power of two he number of points will be the next larger
             <li><a href="/Angara.Statistics/tutorial.html">Probability distributions tutorial</a></li>
 
             <li class="nav-header">Documentation</li>
+            <li><a href="/Angara.Statistics/distributions.html">Supported probabilty distributions</a></li>
             <li><a href="/Angara.Statistics/reference/index.html">API reference</a></li>
           </ul>
         </div>
