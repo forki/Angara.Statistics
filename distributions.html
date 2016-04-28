@@ -70,7 +70,7 @@ This compares output of <code>draw</code> and <code>log_pdf</code> functions for
 </tr>
 </table>
 <h3><a name="Uniform-distribution" class="anchor" href="#Uniform-distribution">Uniform distribution</a></h3>
-<p><code>Uniform(lower_bound, upper_bound)</code> signifies a uniform probability distribution on [lower<em>bound, upper</em>bound) interval.
+<p><code>Uniform(lower_bound, upper_bound)</code> signifies a uniform probability distribution on [lower_bound, upper_bound) interval.
 Upper bound must be greater than lower bound.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -86,7 +86,7 @@ Upper bound must be greater than lower bound.</p>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_92f4766df0c54d7680ba3d84fe8b8247 = {
+        var content_930d7c977f354cdea7267b994b13554d = {
   ":Chart": [
     {
       "displayName": "line",
@@ -139,18 +139,19 @@ Upper bound must be greater than lower bound.</p>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_92f4766df0c54d7680ba3d84fe8b8247');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_92f4766df0c54d7680ba3d84fe8b8247);
+            var viewer = document.getElementById('container_930d7c977f354cdea7267b994b13554d');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_930d7c977f354cdea7267b994b13554d);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_92f4766df0c54d7680ba3d84fe8b8247" class="viewer-container">
+    <div style="height:400px" id="container_930d7c977f354cdea7267b994b13554d" class="viewer-container">
     </div>
 </section>
 
 <h3><a name="Log-uniform-distribution" class="anchor" href="#Log-uniform-distribution">Log-uniform distribution</a></h3>
-<p><code>Uniform(lower_bound, upper_bound)</code>. A uniform distribution of <code>log(x)</code> is a non-uniform for <code>x</code>.
+<p><code>Uniform(lower_bound, upper_bound)</code>.
+A uniform distribution of <code>log(x)</code> is a non-uniform for <code>x</code>.
 Both bounds must be greater than zero.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -166,7 +167,7 @@ Both bounds must be greater than zero.</p>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_b06d260e25e0449fb87972ec9a3e5313 = {
+        var content_070fab2bb0f944b69c24aabdc1b09461 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -219,13 +220,97 @@ Both bounds must be greater than zero.</p>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_b06d260e25e0449fb87972ec9a3e5313');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_b06d260e25e0449fb87972ec9a3e5313);
+            var viewer = document.getElementById('container_070fab2bb0f944b69c24aabdc1b09461');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_070fab2bb0f944b69c24aabdc1b09461);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_b06d260e25e0449fb87972ec9a3e5313" class="viewer-container">
+    <div style="height:400px" id="container_070fab2bb0f944b69c24aabdc1b09461" class="viewer-container">
+    </div>
+</section>
+
+<h3><a name="Linear-distribution" class="anchor" href="#Linear-distribution">Linear distribution</a></h3>
+<p><code>Linear(lower_bound, upper_bound, density_at_lower_bound)</code>.
+Density function of this distribution is linear on a [lower_bound, upper_bound) range and is 'improbable' outside of it.
+Normalization condition gives us density value at upper bound: density_at_upper_bound = density_at_lower_bound + 2/(upper_bound - lower_bound).
+Density must be positive on both sides which restricts their possible values.
+If <code>density_at_lower_band</code> is outside of the permissible range, it is brought to the nearest permissible value.</p>
+<p>This distribution is useful as a component of <code>Mixture</code> (see below).</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs36', 88)" onmouseover="showTip(event, 'fs36', 88)" class="i">chart_linear</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 89)" onmouseover="showTip(event, 'fs5', 89)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs37', 90)" onmouseover="showTip(event, 'fs37', 90)" class="p">Linear</span>(<span class="o">-</span><span class="n">1.</span>, <span class="n">2.</span>, <span class="n">0.2</span>)
+    <span onmouseout="hideTip(event, 'fs4', 91)" onmouseover="showTip(event, 'fs4', 91)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 92)" onmouseover="showTip(event, 'fs5', 92)" class="i">d</span> <span class="o">-</span><span class="n">1.5</span> <span class="n">2.5</span>
+</code></pre></td>
+</tr>
+</table>
+<section>
+    <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+    <script>
+        var content_677edb9f236741ef8e7a0d359da0f9b9 = {
+  ":Chart": [
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "lightgray",
+        "thickness": 7.0,
+        "treatAs": "0",
+        "x:double array": "AAAAAAAA+L8AAAAAAID3vwAAAAAAAPe/AAAAAACA9r8AAAAAAAD2vwAAAAAAgPW/AAAAAAAA9b8AAAAAAID0vwAAAAAAAPS/AAAAAACA878AAAAAAADzvwAAAAAAgPK/AAAAAAAA8r8AAAAAAIDxvwAAAAAAAPG/AAAAAACA8L8AAAAAAADwvwAAAAAAAO+/AAAAAAAA7r8AAAAAAADtvwAAAAAAAOy/AAAAAAAA678AAAAAAADqvwAAAAAAAOm/AAAAAAAA6L8AAAAAAADnvwAAAAAAAOa/AAAAAAAA5b8AAAAAAADkvwAAAAAAAOO/AAAAAAAA4r8AAAAAAADhvwAAAAAAAOC/AAAAAAAA3r8AAAAAAADcvwAAAAAAANq/AAAAAAAA2L8AAAAAAADWvwAAAAAAANS/AAAAAAAA0r8AAAAAAADQvwAAAAAAAMy/AAAAAAAAyL8AAAAAAADEvwAAAAAAAMC/AAAAAAAAuL8AAAAAAACwvwAAAAAAAKC/AAAAAAAAAAAAAAAAAACgPwAAAAAAALA/AAAAAAAAuD8AAAAAAADAPwAAAAAAAMQ/AAAAAAAAyD8AAAAAAADMPwAAAAAAANA/AAAAAAAA0j8AAAAAAADUPwAAAAAAANY/AAAAAAAA2D8AAAAAAADaPwAAAAAAANw/AAAAAAAA3j8AAAAAAADgPwAAAAAAAOE/AAAAAAAA4j8AAAAAAADjPwAAAAAAAOQ/AAAAAAAA5T8AAAAAAADmPwAAAAAAAOc/AAAAAAAA6D8AAAAAAADpPwAAAAAAAOo/AAAAAAAA6z8AAAAAAADsPwAAAAAAAO0/AAAAAAAA7j8AAAAAAADvPwAAAAAAAPA/AAAAAACA8D8AAAAAAADxPwAAAAAAgPE/AAAAAAAA8j8AAAAAAIDyPwAAAAAAAPM/AAAAAACA8z8AAAAAAAD0PwAAAAAAgPQ/AAAAAAAA9T8AAAAAAID1PwAAAAAAAPY/AAAAAACA9j8AAAAAAAD3PwAAAAAAgPc/AAAAAAAA+D8AAAAAAID4PwAAAAAAAPk/AAAAAACA+T8AAAAAAAD6PwAAAAAAgPo/AAAAAAAA+z8AAAAAAID7PwAAAAAAAPw/AAAAAACA/D8AAAAAAAD9PwAAAAAAgP0/AAAAAAAA/j8AAAAAAID+PwAAAAAAAP8/AAAAAACA/z8AAAAAAAAAQAAAAAAAQABAAAAAAACAAEAAAAAAAMAAQAAAAAAAAAFAAAAAAABAAUAAAAAAAIABQAAAAAAAwAFAAAAAAAAAAkAAAAAAAEACQAAAAAAAgAJAAAAAAADAAkAAAAAAAAADQAAAAAAAQANAAAAAAACAA0AAAAAAAMADQAAAAAAAAARA",
+        "y:double array": "fAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEACamZmZmZnJP0mf9Emf9Mk/+6RP+qRPyj+rqqqqqqrKP1ywBVuwBcs/DLZgC7Zgyz+8u7u7u7vLP23BFmzBFsw/HcdxHMdxzD/NzMzMzMzMP3zSJ33SJ80/LdiCLdiCzT/e3d3d3d3NP4/jOI7jOM4/QOmTPumTzj/w7u7u7u7OP6D0SZ/0Sc8/UfqkT/qkzz8AAAAAAADQP9iCLdiCLdA/sAVbsAVb0D+IiIiIiIjQP2ELtmALttA/OY7jOI7j0D8RERERERHRP+mTPumTPtE/wBZswRZs0T+amZmZmZnRP3Icx3Ecx9E/Sp/0SZ/00T8iIiIiIiLSP/qkT/qkT9I/0id90id90j+qqqqqqqrSP4Mt2IIt2NI/W7AFW7AF0z8zMzMzMzPTPwu2YAu2YNM/5DiO4ziO0z+8u7u7u7vTP5M+6ZM+6dM/bMEWbMEW1D9DRERERETUPxzHcRzHcdQ/9Emf9Emf1D/MzMzMzMzUP6RP+qRP+tQ/fNInfdIn1T9VVVVVVVXVPy3Ygi3YgtU/BluwBVuw1T/f3d3d3d3VP7ZgC7ZgC9Y/juM4juM41j9lZmZmZmbWPz/pkz7pk9Y/FmzBFmzB1j/u7u7u7u7WP8ZxHMdxHNc/n/RJn/RJ1z94d3d3d3fXP0/6pE/6pNc/KH3SJ33S1z8AAAAAAADYP9iCLdiCLdg/sAVbsAVb2D+IiIiIiIjYP2ALtmALttg/OI7jOI7j2D8QERERERHZP+mTPumTPtk/wRZswRZs2T+ZmZmZmZnZP3Ecx3Ecx9k/SZ/0SZ/02T8iIiIiIiLaP/qkT/qkT9o/0id90id92j+qqqqqqqraP4It2IIt2No/WrAFW7AF2z8yMzMzMzPbPwq2YAu2YNs/4ziO4ziO2z+7u7u7u7vbP5M+6ZM+6ds/bMEWbMEW3D9ERERERETcPxzHcRzHcdw/9Emf9Emf3D/MzMzMzMzcP6RP+qRP+tw/fNInfdIn3T9UVVVVVVXdPy3Ygi3Ygt0/BVuwBVuw3T/d3d3d3d3dP3wAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAAfAAAAAAAEAB8AAAAAAAQAHwAAAAAABAA"
+      },
+      "titles": {}
+    },
+    {
+      "displayName": "line",
+      "kind": "line",
+      "properties": {
+        "fill_68": "#1F497D",
+        "fill_95": "#1F497D",
+        "stroke": "#1F497D",
+        "thickness": 1.0,
+        "treatAs": "0",
+        "x:double array": "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",
+        "y:double array": "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"
+      },
+      "titles": {}
+    }
+  ]
+};
+        require.config({
+            baseUrl: "https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist",
+            paths: {
+                "angara.serializationjs": "https://cdn.rawgit.com/predictionmachines/Angara.Serialization/v0.2.0/dist/Angara.Serialization.umd",
+                "Chart": "https://cdn.rawgit.com/predictionmachines/Angara.Chart/0.2.0/dist/Chart",
+                "Table": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/Table",
+                "angara.tablejs": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "jquery.dataTables": "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.min",
+                "jquery.dataTables-css": "https://cdn.rawgit.com/predictionmachines/Angara.Table/0.2.1/dist/angara.tablejs",
+                "chartViewer.umd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.1/dist/chartViewer.umd",
+                "chartViewer-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.1/dist/chartViewer",
+                "idd": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.1/dist/idd",
+                "idd-css": "https://cdn.rawgit.com/predictionmachines/InteractiveDataDisplay/v1.2.1/dist/idd",
+                "domReady": "https://cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady.min",
+                "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min",
+                "jquery-ui": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui",
+                "css": "https://cdnjs.cloudflare.com/ajax/libs/require-css/0.1.8/css.min",
+                "rx": "https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.lite.min"
+            }
+        });
+        require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
+            var viewer = document.getElementById('container_677edb9f236741ef8e7a0d359da0f9b9');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_677edb9f236741ef8e7a0d359da0f9b9);
+            var content = Marshalling.InfoSet.Deserialize(content_is);
+            return Angara.Show(content, viewer);
+        });
+    </script>
+    <div style="height:400px" id="container_677edb9f236741ef8e7a0d359da0f9b9" class="viewer-container">
     </div>
 </section>
 
@@ -235,9 +320,9 @@ Both bounds must be greater than zero.</p>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs36', 88)" onmouseover="showTip(event, 'fs36', 88)" class="i">chart_normal</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 89)" onmouseover="showTip(event, 'fs5', 89)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs37', 90)" onmouseover="showTip(event, 'fs37', 90)" class="p">Normal</span>(<span class="n">37.</span>, <span class="n">9.</span>)
-    <span onmouseout="hideTip(event, 'fs4', 91)" onmouseover="showTip(event, 'fs4', 91)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 92)" onmouseover="showTip(event, 'fs5', 92)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs38', 93)" onmouseover="showTip(event, 'fs38', 93)" class="i">chart_normal</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 94)" onmouseover="showTip(event, 'fs5', 94)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs39', 95)" onmouseover="showTip(event, 'fs39', 95)" class="p">Normal</span>(<span class="n">37.</span>, <span class="n">9.</span>)
+    <span onmouseout="hideTip(event, 'fs4', 96)" onmouseover="showTip(event, 'fs4', 96)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 97)" onmouseover="showTip(event, 'fs5', 97)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
 </code></pre></td>
 </tr>
 </table>
@@ -245,7 +330,7 @@ Both bounds must be greater than zero.</p>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_506f59d39c004405b89b27284109b411 = {
+        var content_58a2fb9c781e44c19ad808005a1291e5 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -298,25 +383,26 @@ Both bounds must be greater than zero.</p>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_506f59d39c004405b89b27284109b411');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_506f59d39c004405b89b27284109b411);
+            var viewer = document.getElementById('container_58a2fb9c781e44c19ad808005a1291e5');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_58a2fb9c781e44c19ad808005a1291e5);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_506f59d39c004405b89b27284109b411" class="viewer-container">
+    <div style="height:400px" id="container_58a2fb9c781e44c19ad808005a1291e5" class="viewer-container">
     </div>
 </section>
 
 <h3><a name="Log-normal-distribution" class="anchor" href="#Log-normal-distribution">Log-normal distribution</a></h3>
-<p><code>LogNormal(mean, standard_deviation_log)</code>. A normal distribution of <code>log(x)</code>. The second parameter is a standard deviation of log(x), not a standard deviation of x.</p>
+<p><code>LogNormal(mean, standard_deviation_log)</code>. A normal distribution of <code>log(x)</code>.
+The second parameter is a standard deviation of log(x), not a standard deviation of x.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs38', 93)" onmouseover="showTip(event, 'fs38', 93)" class="i">chart_lognormal</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 94)" onmouseover="showTip(event, 'fs5', 94)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs39', 95)" onmouseover="showTip(event, 'fs39', 95)" class="p">LogNormal</span>(<span class="n">37.</span>, <span class="n">0.3</span>)
-    <span onmouseout="hideTip(event, 'fs4', 96)" onmouseover="showTip(event, 'fs4', 96)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 97)" onmouseover="showTip(event, 'fs5', 97)" class="i">d</span> <span class="n">10.</span> <span class="n">90.</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs40', 98)" onmouseover="showTip(event, 'fs40', 98)" class="i">chart_lognormal</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 99)" onmouseover="showTip(event, 'fs5', 99)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs41', 100)" onmouseover="showTip(event, 'fs41', 100)" class="p">LogNormal</span>(<span class="n">37.</span>, <span class="n">0.3</span>)
+    <span onmouseout="hideTip(event, 'fs4', 101)" onmouseover="showTip(event, 'fs4', 101)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 102)" onmouseover="showTip(event, 'fs5', 102)" class="i">d</span> <span class="n">10.</span> <span class="n">90.</span>
 </code></pre></td>
 </tr>
 </table>
@@ -324,7 +410,7 @@ Both bounds must be greater than zero.</p>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_b8486b87b59f4f99a1f4977bab2ede9d = {
+        var content_424925d0b5f2459594349b399d022d55 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -377,13 +463,13 @@ Both bounds must be greater than zero.</p>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_b8486b87b59f4f99a1f4977bab2ede9d');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_b8486b87b59f4f99a1f4977bab2ede9d);
+            var viewer = document.getElementById('container_424925d0b5f2459594349b399d022d55');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_424925d0b5f2459594349b399d022d55);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_b8486b87b59f4f99a1f4977bab2ede9d" class="viewer-container">
+    <div style="height:400px" id="container_424925d0b5f2459594349b399d022d55" class="viewer-container">
     </div>
 </section>
 
@@ -397,9 +483,9 @@ Values of an exponentially distributed random variable are always greater than z
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs40', 98)" onmouseover="showTip(event, 'fs40', 98)" class="i">chart_exponential</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 99)" onmouseover="showTip(event, 'fs5', 99)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs41', 100)" onmouseover="showTip(event, 'fs41', 100)" class="p">Exponential</span>(<span class="n">5.7</span>)
-    <span onmouseout="hideTip(event, 'fs4', 101)" onmouseover="showTip(event, 'fs4', 101)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 102)" onmouseover="showTip(event, 'fs5', 102)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs42', 103)" onmouseover="showTip(event, 'fs42', 103)" class="i">chart_exponential</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 104)" onmouseover="showTip(event, 'fs5', 104)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs43', 105)" onmouseover="showTip(event, 'fs43', 105)" class="p">Exponential</span>(<span class="n">5.7</span>)
+    <span onmouseout="hideTip(event, 'fs4', 106)" onmouseover="showTip(event, 'fs4', 106)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 107)" onmouseover="showTip(event, 'fs5', 107)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
 </code></pre></td>
 </tr>
 </table>
@@ -407,7 +493,7 @@ Values of an exponentially distributed random variable are always greater than z
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_98db02dac8724e598e3bd1c18a3d26bd = {
+        var content_4852c6f9dac9415bb95b9a67cfbfe22a = {
   ":Chart": [
     {
       "displayName": "line",
@@ -460,13 +546,13 @@ Values of an exponentially distributed random variable are always greater than z
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_98db02dac8724e598e3bd1c18a3d26bd');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_98db02dac8724e598e3bd1c18a3d26bd);
+            var viewer = document.getElementById('container_4852c6f9dac9415bb95b9a67cfbfe22a');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_4852c6f9dac9415bb95b9a67cfbfe22a);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_98db02dac8724e598e3bd1c18a3d26bd" class="viewer-container">
+    <div style="height:400px" id="container_4852c6f9dac9415bb95b9a67cfbfe22a" class="viewer-container">
     </div>
 </section>
 
@@ -479,9 +565,9 @@ A special case of Gamma <em>Γ(k/2, 1/2)</em> is a chi-squared distribution <em>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs42', 103)" onmouseover="showTip(event, 'fs42', 103)" class="i">chart_gamma</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 104)" onmouseover="showTip(event, 'fs5', 104)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs43', 105)" onmouseover="showTip(event, 'fs43', 105)" class="p">Gamma</span>(<span class="n">3.0</span>, <span class="n">0.5</span>)
-    <span onmouseout="hideTip(event, 'fs4', 106)" onmouseover="showTip(event, 'fs4', 106)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 107)" onmouseover="showTip(event, 'fs5', 107)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs44', 108)" onmouseover="showTip(event, 'fs44', 108)" class="i">chart_gamma</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 109)" onmouseover="showTip(event, 'fs5', 109)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs45', 110)" onmouseover="showTip(event, 'fs45', 110)" class="p">Gamma</span>(<span class="n">3.0</span>, <span class="n">0.5</span>)
+    <span onmouseout="hideTip(event, 'fs4', 111)" onmouseover="showTip(event, 'fs4', 111)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 112)" onmouseover="showTip(event, 'fs5', 112)" class="i">d</span> <span class="n">0.</span> <span class="n">20.</span>
 </code></pre></td>
 </tr>
 </table>
@@ -489,7 +575,7 @@ A special case of Gamma <em>Γ(k/2, 1/2)</em> is a chi-squared distribution <em>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_30cc8b8a2f434369a65e4cf5c7b9e25c = {
+        var content_0d52b57a734f4fad9e40482b8dbed74c = {
   ":Chart": [
     {
       "displayName": "line",
@@ -542,13 +628,13 @@ A special case of Gamma <em>Γ(k/2, 1/2)</em> is a chi-squared distribution <em>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_30cc8b8a2f434369a65e4cf5c7b9e25c');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_30cc8b8a2f434369a65e4cf5c7b9e25c);
+            var viewer = document.getElementById('container_0d52b57a734f4fad9e40482b8dbed74c');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_0d52b57a734f4fad9e40482b8dbed74c);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_30cc8b8a2f434369a65e4cf5c7b9e25c" class="viewer-container">
+    <div style="height:400px" id="container_0d52b57a734f4fad9e40482b8dbed74c" class="viewer-container">
     </div>
 </section>
 
@@ -577,22 +663,22 @@ This compares output of <code>draw</code> and <code>log_pdf</code> functions for
 <span class="l">15: </span>
 <span class="l">16: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs44', 108)" onmouseover="showTip(event, 'fs44', 108)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 109)" onmouseover="showTip(event, 'fs5', 109)" class="i">d</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 110)" onmouseover="showTip(event, 'fs8', 110)" class="i">n</span>, <span onmouseout="hideTip(event, 'fs9', 111)" onmouseover="showTip(event, 'fs9', 111)" class="i">k</span>, <span onmouseout="hideTip(event, 'fs10', 112)" onmouseover="showTip(event, 'fs10', 112)" class="i">mt</span> <span class="o">=</span> <span class="n">20</span>, <span class="n">20480</span>, <span onmouseout="hideTip(event, 'fs11', 113)" onmouseover="showTip(event, 'fs11', 113)" class="t">MT19937</span>()
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 114)" onmouseover="showTip(event, 'fs12', 114)" class="i">h</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 115)" onmouseover="showTip(event, 'fs23', 115)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs45', 116)" onmouseover="showTip(event, 'fs45', 116)" class="f">create</span> (<span onmouseout="hideTip(event, 'fs8', 117)" onmouseover="showTip(event, 'fs8', 117)" class="i">n</span><span class="o">+</span><span class="n">1</span>) <span class="n">0</span>
-    <span onmouseout="hideTip(event, 'fs46', 118)" onmouseover="showTip(event, 'fs46', 118)" class="i">seq</span> {<span class="n">1..</span><span onmouseout="hideTip(event, 'fs9', 119)" onmouseover="showTip(event, 'fs9', 119)" class="i">k</span>} <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs13', 120)" onmouseover="showTip(event, 'fs13', 120)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs47', 121)" onmouseover="showTip(event, 'fs47', 121)" class="f">iter</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 122)" onmouseover="showTip(event, 'fs18', 122)" class="i">i</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs48', 123)" onmouseover="showTip(event, 'fs48', 123)" class="f">int</span>(<span onmouseout="hideTip(event, 'fs15', 124)" onmouseover="showTip(event, 'fs15', 124)" class="f">draw</span> <span onmouseout="hideTip(event, 'fs10', 125)" onmouseover="showTip(event, 'fs10', 125)" class="i">mt</span> <span onmouseout="hideTip(event, 'fs5', 126)" onmouseover="showTip(event, 'fs5', 126)" class="i">d</span>) <span class="k">in</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 127)" onmouseover="showTip(event, 'fs18', 127)" class="i">i</span><span class="o">&lt;=</span><span onmouseout="hideTip(event, 'fs8', 128)" onmouseover="showTip(event, 'fs8', 128)" class="i">n</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs12', 129)" onmouseover="showTip(event, 'fs12', 129)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 130)" onmouseover="showTip(event, 'fs18', 130)" class="i">i</span>] <span class="o">&lt;-</span> <span onmouseout="hideTip(event, 'fs12', 131)" onmouseover="showTip(event, 'fs12', 131)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 132)" onmouseover="showTip(event, 'fs18', 132)" class="i">i</span>]<span class="o">+</span><span class="n">1</span>)
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 133)" onmouseover="showTip(event, 'fs17', 133)" class="i">xh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 134)" onmouseover="showTip(event, 'fs18', 134)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 135)" onmouseover="showTip(event, 'fs8', 135)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
-                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 136)" onmouseover="showTip(event, 'fs18', 136)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs49', 137)" onmouseover="showTip(event, 'fs49', 137)" class="i">nan</span> 
-                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs19', 138)" onmouseover="showTip(event, 'fs19', 138)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs18', 139)" onmouseover="showTip(event, 'fs18', 139)" class="i">i</span><span class="o">/</span><span class="n">3</span>)|]
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 140)" onmouseover="showTip(event, 'fs20', 140)" class="i">yh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 141)" onmouseover="showTip(event, 'fs18', 141)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 142)" onmouseover="showTip(event, 'fs8', 142)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
-                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 143)" onmouseover="showTip(event, 'fs18', 143)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.</span> 
-                <span class="k">elif</span> <span onmouseout="hideTip(event, 'fs18', 144)" onmouseover="showTip(event, 'fs18', 144)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">1</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs19', 145)" onmouseover="showTip(event, 'fs19', 145)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs12', 146)" onmouseover="showTip(event, 'fs12', 146)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 147)" onmouseover="showTip(event, 'fs18', 147)" class="i">i</span><span class="o">/</span><span class="n">3</span>])<span class="o">/</span><span onmouseout="hideTip(event, 'fs19', 148)" onmouseover="showTip(event, 'fs19', 148)" class="f">float</span> <span onmouseout="hideTip(event, 'fs9', 149)" onmouseover="showTip(event, 'fs9', 149)" class="i">k</span> 
-                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs49', 150)" onmouseover="showTip(event, 'fs49', 150)" class="i">nan</span> |]
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 151)" onmouseover="showTip(event, 'fs22', 151)" class="i">ypdf</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 152)" onmouseover="showTip(event, 'fs23', 152)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs50', 153)" onmouseover="showTip(event, 'fs50', 153)" class="f">mapi</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs18', 154)" onmouseover="showTip(event, 'fs18', 154)" class="i">i</span> <span onmouseout="hideTip(event, 'fs25', 155)" onmouseover="showTip(event, 'fs25', 155)" class="i">x</span> <span class="k">-&gt;</span>
-        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 156)" onmouseover="showTip(event, 'fs18', 156)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.0</span> <span class="k">else</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 157)" onmouseover="showTip(event, 'fs18', 157)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs49', 158)" onmouseover="showTip(event, 'fs49', 158)" class="i">nan</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs26', 159)" onmouseover="showTip(event, 'fs26', 159)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs27', 160)" onmouseover="showTip(event, 'fs27', 160)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs5', 161)" onmouseover="showTip(event, 'fs5', 161)" class="i">d</span> <span onmouseout="hideTip(event, 'fs25', 162)" onmouseover="showTip(event, 'fs25', 162)" class="i">x</span>)) <span onmouseout="hideTip(event, 'fs17', 163)" onmouseover="showTip(event, 'fs17', 163)" class="i">xh</span>
-    <span onmouseout="hideTip(event, 'fs28', 164)" onmouseover="showTip(event, 'fs28', 164)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 165)" onmouseover="showTip(event, 'fs29', 165)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs30', 166)" onmouseover="showTip(event, 'fs30', 166)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 167)" onmouseover="showTip(event, 'fs31', 167)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 168)" onmouseover="showTip(event, 'fs17', 168)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs22', 169)" onmouseover="showTip(event, 'fs22', 169)" class="i">ypdf</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
-                  <span onmouseout="hideTip(event, 'fs30', 170)" onmouseover="showTip(event, 'fs30', 170)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 171)" onmouseover="showTip(event, 'fs31', 171)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 172)" onmouseover="showTip(event, 'fs17', 172)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs20', 173)" onmouseover="showTip(event, 'fs20', 173)" class="i">yh</span>)]
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs46', 113)" onmouseover="showTip(event, 'fs46', 113)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 114)" onmouseover="showTip(event, 'fs5', 114)" class="i">d</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 115)" onmouseover="showTip(event, 'fs8', 115)" class="i">n</span>, <span onmouseout="hideTip(event, 'fs9', 116)" onmouseover="showTip(event, 'fs9', 116)" class="i">k</span>, <span onmouseout="hideTip(event, 'fs10', 117)" onmouseover="showTip(event, 'fs10', 117)" class="i">mt</span> <span class="o">=</span> <span class="n">20</span>, <span class="n">20480</span>, <span onmouseout="hideTip(event, 'fs11', 118)" onmouseover="showTip(event, 'fs11', 118)" class="t">MT19937</span>()
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 119)" onmouseover="showTip(event, 'fs12', 119)" class="i">h</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 120)" onmouseover="showTip(event, 'fs23', 120)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs47', 121)" onmouseover="showTip(event, 'fs47', 121)" class="f">create</span> (<span onmouseout="hideTip(event, 'fs8', 122)" onmouseover="showTip(event, 'fs8', 122)" class="i">n</span><span class="o">+</span><span class="n">1</span>) <span class="n">0</span>
+    <span onmouseout="hideTip(event, 'fs48', 123)" onmouseover="showTip(event, 'fs48', 123)" class="i">seq</span> {<span class="n">1..</span><span onmouseout="hideTip(event, 'fs9', 124)" onmouseover="showTip(event, 'fs9', 124)" class="i">k</span>} <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs13', 125)" onmouseover="showTip(event, 'fs13', 125)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs49', 126)" onmouseover="showTip(event, 'fs49', 126)" class="f">iter</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 127)" onmouseover="showTip(event, 'fs18', 127)" class="i">i</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs50', 128)" onmouseover="showTip(event, 'fs50', 128)" class="f">int</span>(<span onmouseout="hideTip(event, 'fs15', 129)" onmouseover="showTip(event, 'fs15', 129)" class="f">draw</span> <span onmouseout="hideTip(event, 'fs10', 130)" onmouseover="showTip(event, 'fs10', 130)" class="i">mt</span> <span onmouseout="hideTip(event, 'fs5', 131)" onmouseover="showTip(event, 'fs5', 131)" class="i">d</span>) <span class="k">in</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 132)" onmouseover="showTip(event, 'fs18', 132)" class="i">i</span><span class="o">&lt;=</span><span onmouseout="hideTip(event, 'fs8', 133)" onmouseover="showTip(event, 'fs8', 133)" class="i">n</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs12', 134)" onmouseover="showTip(event, 'fs12', 134)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 135)" onmouseover="showTip(event, 'fs18', 135)" class="i">i</span>] <span class="o">&lt;-</span> <span onmouseout="hideTip(event, 'fs12', 136)" onmouseover="showTip(event, 'fs12', 136)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 137)" onmouseover="showTip(event, 'fs18', 137)" class="i">i</span>]<span class="o">+</span><span class="n">1</span>)
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 138)" onmouseover="showTip(event, 'fs17', 138)" class="i">xh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 139)" onmouseover="showTip(event, 'fs18', 139)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 140)" onmouseover="showTip(event, 'fs8', 140)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
+                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 141)" onmouseover="showTip(event, 'fs18', 141)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs51', 142)" onmouseover="showTip(event, 'fs51', 142)" class="i">nan</span> 
+                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs19', 143)" onmouseover="showTip(event, 'fs19', 143)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs18', 144)" onmouseover="showTip(event, 'fs18', 144)" class="i">i</span><span class="o">/</span><span class="n">3</span>)|]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 145)" onmouseover="showTip(event, 'fs20', 145)" class="i">yh</span> <span class="o">=</span> [|<span class="k">for</span> <span onmouseout="hideTip(event, 'fs18', 146)" onmouseover="showTip(event, 'fs18', 146)" class="i">i</span> <span class="k">in</span> <span class="n">0..</span><span class="n">3</span><span class="o">*</span><span onmouseout="hideTip(event, 'fs8', 147)" onmouseover="showTip(event, 'fs8', 147)" class="i">n</span><span class="o">+</span><span class="n">2</span> <span class="k">-&gt;</span>
+                <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 148)" onmouseover="showTip(event, 'fs18', 148)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.</span> 
+                <span class="k">elif</span> <span onmouseout="hideTip(event, 'fs18', 149)" onmouseover="showTip(event, 'fs18', 149)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">1</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs19', 150)" onmouseover="showTip(event, 'fs19', 150)" class="f">float</span>(<span onmouseout="hideTip(event, 'fs12', 151)" onmouseover="showTip(event, 'fs12', 151)" class="i">h</span><span class="o">.</span>[<span onmouseout="hideTip(event, 'fs18', 152)" onmouseover="showTip(event, 'fs18', 152)" class="i">i</span><span class="o">/</span><span class="n">3</span>])<span class="o">/</span><span onmouseout="hideTip(event, 'fs19', 153)" onmouseover="showTip(event, 'fs19', 153)" class="f">float</span> <span onmouseout="hideTip(event, 'fs9', 154)" onmouseover="showTip(event, 'fs9', 154)" class="i">k</span> 
+                <span class="k">else</span> <span onmouseout="hideTip(event, 'fs51', 155)" onmouseover="showTip(event, 'fs51', 155)" class="i">nan</span> |]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 156)" onmouseover="showTip(event, 'fs22', 156)" class="i">ypdf</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 157)" onmouseover="showTip(event, 'fs23', 157)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs52', 158)" onmouseover="showTip(event, 'fs52', 158)" class="f">mapi</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs18', 159)" onmouseover="showTip(event, 'fs18', 159)" class="i">i</span> <span onmouseout="hideTip(event, 'fs25', 160)" onmouseover="showTip(event, 'fs25', 160)" class="i">x</span> <span class="k">-&gt;</span>
+        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 161)" onmouseover="showTip(event, 'fs18', 161)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">0</span> <span class="k">then</span> <span class="n">0.0</span> <span class="k">else</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs18', 162)" onmouseover="showTip(event, 'fs18', 162)" class="i">i</span><span class="o">%</span><span class="n">3</span><span class="o">=</span><span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs51', 163)" onmouseover="showTip(event, 'fs51', 163)" class="i">nan</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs26', 164)" onmouseover="showTip(event, 'fs26', 164)" class="f">exp</span>(<span onmouseout="hideTip(event, 'fs27', 165)" onmouseover="showTip(event, 'fs27', 165)" class="f">log_pdf</span> <span onmouseout="hideTip(event, 'fs5', 166)" onmouseover="showTip(event, 'fs5', 166)" class="i">d</span> <span onmouseout="hideTip(event, 'fs25', 167)" onmouseover="showTip(event, 'fs25', 167)" class="i">x</span>)) <span onmouseout="hideTip(event, 'fs17', 168)" onmouseover="showTip(event, 'fs17', 168)" class="i">xh</span>
+    <span onmouseout="hideTip(event, 'fs28', 169)" onmouseover="showTip(event, 'fs28', 169)" class="t">Chart</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 170)" onmouseover="showTip(event, 'fs29', 170)" class="f">ofList</span> [<span onmouseout="hideTip(event, 'fs30', 171)" onmouseover="showTip(event, 'fs30', 171)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 172)" onmouseover="showTip(event, 'fs31', 172)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 173)" onmouseover="showTip(event, 'fs17', 173)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs22', 174)" onmouseover="showTip(event, 'fs22', 174)" class="i">ypdf</span>, <span class="i">thickness</span><span class="o">=</span><span class="n">7.</span>, <span class="i">stroke</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span>)
+                  <span onmouseout="hideTip(event, 'fs30', 175)" onmouseover="showTip(event, 'fs30', 175)" class="t">Plot</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs31', 176)" onmouseover="showTip(event, 'fs31', 176)" class="f">line</span>(<span onmouseout="hideTip(event, 'fs17', 177)" onmouseover="showTip(event, 'fs17', 177)" class="i">xh</span>, <span onmouseout="hideTip(event, 'fs20', 178)" onmouseover="showTip(event, 'fs20', 178)" class="i">yh</span>)]
 </code></pre></td>
 </tr>
 </table>
@@ -603,9 +689,9 @@ Note that <code>log_pdf</code> function returns the same value for all 'x &gt; 0
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs51', 174)" onmouseover="showTip(event, 'fs51', 174)" class="i">chart_bernoulli</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 175)" onmouseover="showTip(event, 'fs5', 175)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs52', 176)" onmouseover="showTip(event, 'fs52', 176)" class="p">Bernoulli</span>(<span class="n">0.7</span>)
-    <span onmouseout="hideTip(event, 'fs44', 177)" onmouseover="showTip(event, 'fs44', 177)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 178)" onmouseover="showTip(event, 'fs5', 178)" class="i">d</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs53', 179)" onmouseover="showTip(event, 'fs53', 179)" class="i">chart_bernoulli</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 180)" onmouseover="showTip(event, 'fs5', 180)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs54', 181)" onmouseover="showTip(event, 'fs54', 181)" class="p">Bernoulli</span>(<span class="n">0.7</span>)
+    <span onmouseout="hideTip(event, 'fs46', 182)" onmouseover="showTip(event, 'fs46', 182)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 183)" onmouseover="showTip(event, 'fs5', 183)" class="i">d</span>
 </code></pre></td>
 </tr>
 </table>
@@ -613,7 +699,7 @@ Note that <code>log_pdf</code> function returns the same value for all 'x &gt; 0
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_e1830cbaff424e6eabc243a9ad85019f = {
+        var content_1c35022f19e94c5f8b5a06f4978d67d8 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -666,13 +752,13 @@ Note that <code>log_pdf</code> function returns the same value for all 'x &gt; 0
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_e1830cbaff424e6eabc243a9ad85019f');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_e1830cbaff424e6eabc243a9ad85019f);
+            var viewer = document.getElementById('container_1c35022f19e94c5f8b5a06f4978d67d8');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_1c35022f19e94c5f8b5a06f4978d67d8);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_e1830cbaff424e6eabc243a9ad85019f" class="viewer-container">
+    <div style="height:400px" id="container_1c35022f19e94c5f8b5a06f4978d67d8" class="viewer-container">
     </div>
 </section>
 
@@ -683,9 +769,9 @@ in a sequence of <code>n</code> independent yes/no experiments, each of which yi
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs53', 179)" onmouseover="showTip(event, 'fs53', 179)" class="i">chart_binomial</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 180)" onmouseover="showTip(event, 'fs5', 180)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs54', 181)" onmouseover="showTip(event, 'fs54', 181)" class="p">Binomial</span>(<span class="n">20</span>, <span class="n">0.7</span>)
-    <span onmouseout="hideTip(event, 'fs44', 182)" onmouseover="showTip(event, 'fs44', 182)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 183)" onmouseover="showTip(event, 'fs5', 183)" class="i">d</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs55', 184)" onmouseover="showTip(event, 'fs55', 184)" class="i">chart_binomial</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 185)" onmouseover="showTip(event, 'fs5', 185)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs56', 186)" onmouseover="showTip(event, 'fs56', 186)" class="p">Binomial</span>(<span class="n">20</span>, <span class="n">0.7</span>)
+    <span onmouseout="hideTip(event, 'fs46', 187)" onmouseover="showTip(event, 'fs46', 187)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 188)" onmouseover="showTip(event, 'fs5', 188)" class="i">d</span>
 </code></pre></td>
 </tr>
 </table>
@@ -693,7 +779,7 @@ in a sequence of <code>n</code> independent yes/no experiments, each of which yi
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_01f860db9e53444bad024b1e992c80d5 = {
+        var content_759b6fcae46e4483b2fc6a5898d4a176 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -746,13 +832,13 @@ in a sequence of <code>n</code> independent yes/no experiments, each of which yi
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_01f860db9e53444bad024b1e992c80d5');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_01f860db9e53444bad024b1e992c80d5);
+            var viewer = document.getElementById('container_759b6fcae46e4483b2fc6a5898d4a176');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_759b6fcae46e4483b2fc6a5898d4a176);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_01f860db9e53444bad024b1e992c80d5" class="viewer-container">
+    <div style="height:400px" id="container_759b6fcae46e4483b2fc6a5898d4a176" class="viewer-container">
     </div>
 </section>
 
@@ -763,9 +849,9 @@ in a sequence of yes/no experiments, each of which yields success with probabili
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs55', 184)" onmouseover="showTip(event, 'fs55', 184)" class="i">chart_negative_binomial</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 185)" onmouseover="showTip(event, 'fs5', 185)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs56', 186)" onmouseover="showTip(event, 'fs56', 186)" class="p">NegativeBinomial</span>(<span class="n">5.7</span>, <span class="n">7.5</span>)
-    <span onmouseout="hideTip(event, 'fs44', 187)" onmouseover="showTip(event, 'fs44', 187)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 188)" onmouseover="showTip(event, 'fs5', 188)" class="i">d</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs57', 189)" onmouseover="showTip(event, 'fs57', 189)" class="i">chart_negative_binomial</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 190)" onmouseover="showTip(event, 'fs5', 190)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs58', 191)" onmouseover="showTip(event, 'fs58', 191)" class="p">NegativeBinomial</span>(<span class="n">5.7</span>, <span class="n">7.5</span>)
+    <span onmouseout="hideTip(event, 'fs46', 192)" onmouseover="showTip(event, 'fs46', 192)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 193)" onmouseover="showTip(event, 'fs5', 193)" class="i">d</span>
 </code></pre></td>
 </tr>
 </table>
@@ -773,7 +859,7 @@ in a sequence of yes/no experiments, each of which yields success with probabili
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_9654dbebb9ba4d1b902bfae28863ddf5 = {
+        var content_a5bd9ef2e44945dfbbdc844b89c3c3e8 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -826,13 +912,13 @@ in a sequence of yes/no experiments, each of which yields success with probabili
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_9654dbebb9ba4d1b902bfae28863ddf5');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_9654dbebb9ba4d1b902bfae28863ddf5);
+            var viewer = document.getElementById('container_a5bd9ef2e44945dfbbdc844b89c3c3e8');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_a5bd9ef2e44945dfbbdc844b89c3c3e8);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_9654dbebb9ba4d1b902bfae28863ddf5" class="viewer-container">
+    <div style="height:400px" id="container_a5bd9ef2e44945dfbbdc844b89c3c3e8" class="viewer-container">
     </div>
 </section>
 
@@ -842,9 +928,9 @@ in a sequence of yes/no experiments, each of which yields success with probabili
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs57', 189)" onmouseover="showTip(event, 'fs57', 189)" class="i">chart_poisson</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 190)" onmouseover="showTip(event, 'fs5', 190)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs58', 191)" onmouseover="showTip(event, 'fs58', 191)" class="p">Poisson</span>(<span class="n">5.7</span>)
-    <span onmouseout="hideTip(event, 'fs44', 192)" onmouseover="showTip(event, 'fs44', 192)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 193)" onmouseover="showTip(event, 'fs5', 193)" class="i">d</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs59', 194)" onmouseover="showTip(event, 'fs59', 194)" class="i">chart_poisson</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 195)" onmouseover="showTip(event, 'fs5', 195)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs60', 196)" onmouseover="showTip(event, 'fs60', 196)" class="p">Poisson</span>(<span class="n">5.7</span>)
+    <span onmouseout="hideTip(event, 'fs46', 197)" onmouseover="showTip(event, 'fs46', 197)" class="f">discrete_chart</span> <span onmouseout="hideTip(event, 'fs5', 198)" onmouseover="showTip(event, 'fs5', 198)" class="i">d</span>
 </code></pre></td>
 </tr>
 </table>
@@ -852,7 +938,7 @@ in a sequence of yes/no experiments, each of which yields success with probabili
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_eb3b2328bd414d1384581aca6033f7e9 = {
+        var content_6ce5748520f1493d965a44e9be8dd521 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -905,13 +991,13 @@ in a sequence of yes/no experiments, each of which yields success with probabili
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_eb3b2328bd414d1384581aca6033f7e9');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_eb3b2328bd414d1384581aca6033f7e9);
+            var viewer = document.getElementById('container_6ce5748520f1493d965a44e9be8dd521');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_6ce5748520f1493d965a44e9be8dd521);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_eb3b2328bd414d1384581aca6033f7e9" class="viewer-container">
+    <div style="height:400px" id="container_6ce5748520f1493d965a44e9be8dd521" class="viewer-container">
     </div>
 </section>
 
@@ -922,9 +1008,9 @@ The list must not be empty and sum of the weights must be equal to one.</p>
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs59', 194)" onmouseover="showTip(event, 'fs59', 194)" class="i">chart_mixture</span> <span class="o">=</span>
-    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 195)" onmouseover="showTip(event, 'fs5', 195)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs60', 196)" onmouseover="showTip(event, 'fs60', 196)" class="p">Mixture</span>([<span class="n">0.9</span>,<span onmouseout="hideTip(event, 'fs37', 197)" onmouseover="showTip(event, 'fs37', 197)" class="p">Normal</span>(<span class="n">37.</span>,<span class="n">9.</span>); <span class="n">0.1</span>,<span onmouseout="hideTip(event, 'fs33', 198)" onmouseover="showTip(event, 'fs33', 198)" class="p">Uniform</span>(<span class="n">15.</span>,<span class="n">20.</span>)])
-    <span onmouseout="hideTip(event, 'fs4', 199)" onmouseover="showTip(event, 'fs4', 199)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 200)" onmouseover="showTip(event, 'fs5', 200)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs61', 199)" onmouseover="showTip(event, 'fs61', 199)" class="i">chart_mixture</span> <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 200)" onmouseover="showTip(event, 'fs5', 200)" class="i">d</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs62', 201)" onmouseover="showTip(event, 'fs62', 201)" class="p">Mixture</span>([<span class="n">0.9</span>,<span onmouseout="hideTip(event, 'fs39', 202)" onmouseover="showTip(event, 'fs39', 202)" class="p">Normal</span>(<span class="n">37.</span>,<span class="n">9.</span>); <span class="n">0.1</span>,<span onmouseout="hideTip(event, 'fs33', 203)" onmouseover="showTip(event, 'fs33', 203)" class="p">Uniform</span>(<span class="n">15.</span>,<span class="n">20.</span>)])
+    <span onmouseout="hideTip(event, 'fs4', 204)" onmouseover="showTip(event, 'fs4', 204)" class="f">chart</span> <span onmouseout="hideTip(event, 'fs5', 205)" onmouseover="showTip(event, 'fs5', 205)" class="i">d</span> <span class="n">10.</span> <span class="n">64.</span>
 </code></pre></td>
 </tr>
 </table>
@@ -932,7 +1018,7 @@ The list must not be empty and sum of the weights must be equal to one.</p>
     <link href="https://cdn.rawgit.com/predictionmachines/Angara/0.2.2/dist/Angara.Html.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
     <script>
-        var content_93c22b4c62b24ab792a8e5b4869bd824 = {
+        var content_5d962c7e78994a359df645f845dc3383 = {
   ":Chart": [
     {
       "displayName": "line",
@@ -985,13 +1071,13 @@ The list must not be empty and sum of the weights must be equal to one.</p>
             }
         });
         require(['Angara.Show', 'angara.serializationjs', 'domReady!'], function (Angara, Marshalling, document) {
-            var viewer = document.getElementById('container_93c22b4c62b24ab792a8e5b4869bd824');
-            var content_is = Marshalling.InfoSet.Unmarshal(content_93c22b4c62b24ab792a8e5b4869bd824);
+            var viewer = document.getElementById('container_5d962c7e78994a359df645f845dc3383');
+            var content_is = Marshalling.InfoSet.Unmarshal(content_5d962c7e78994a359df645f845dc3383);
             var content = Marshalling.InfoSet.Deserialize(content_is);
             return Angara.Show(content, viewer);
         });
     </script>
-    <div style="height:400px" id="container_93c22b4c62b24ab792a8e5b4869bd824" class="viewer-container">
+    <div style="height:400px" id="container_5d962c7e78994a359df645f845dc3383" class="viewer-container">
     </div>
 </section>
 
@@ -1031,31 +1117,33 @@ The list must not be empty and sum of the weights must be equal to one.</p>
 <div class="tip" id="fs33">union case Distribution.Uniform: float * float -&gt; Distribution</div>
 <div class="tip" id="fs34">val chart_loguniform : Chart<br /><br />Full name: Distributions.chart_loguniform</div>
 <div class="tip" id="fs35">union case Distribution.LogUniform: float * float -&gt; Distribution</div>
-<div class="tip" id="fs36">val chart_normal : Chart<br /><br />Full name: Distributions.chart_normal</div>
-<div class="tip" id="fs37">union case Distribution.Normal: float * float -&gt; Distribution</div>
-<div class="tip" id="fs38">val chart_lognormal : Chart<br /><br />Full name: Distributions.chart_lognormal</div>
-<div class="tip" id="fs39">union case Distribution.LogNormal: float * float -&gt; Distribution</div>
-<div class="tip" id="fs40">val chart_exponential : Chart<br /><br />Full name: Distributions.chart_exponential</div>
-<div class="tip" id="fs41">union case Distribution.Exponential: mean: float -&gt; Distribution</div>
-<div class="tip" id="fs42">val chart_gamma : Chart<br /><br />Full name: Distributions.chart_gamma</div>
-<div class="tip" id="fs43">union case Distribution.Gamma: float * float -&gt; Distribution</div>
-<div class="tip" id="fs44">val discrete_chart : d:Distribution -&gt; Chart<br /><br />Full name: Distributions.discrete_chart</div>
-<div class="tip" id="fs45">val create : count:int -&gt; value:&#39;T -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Array.create</div>
-<div class="tip" id="fs46">Multiple items<br />val seq : sequence:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Core.Operators.seq<br /><br />--------------------<br />type seq&lt;&#39;T&gt; = System.Collections.Generic.IEnumerable&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.seq&lt;_&gt;</div>
-<div class="tip" id="fs47">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit<br /><br />Full name: Microsoft.FSharp.Collections.Seq.iter</div>
-<div class="tip" id="fs48">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.int<br /><br />--------------------<br />type int = int32<br /><br />Full name: Microsoft.FSharp.Core.int<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int<br /><br />Full name: Microsoft.FSharp.Core.int&lt;_&gt;</div>
-<div class="tip" id="fs49">val nan : float<br /><br />Full name: Microsoft.FSharp.Core.Operators.nan</div>
-<div class="tip" id="fs50">val mapi : mapping:(int -&gt; &#39;T -&gt; &#39;U) -&gt; array:&#39;T [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.mapi</div>
-<div class="tip" id="fs51">val chart_bernoulli : Chart<br /><br />Full name: Distributions.chart_bernoulli</div>
-<div class="tip" id="fs52">union case Distribution.Bernoulli: float -&gt; Distribution</div>
-<div class="tip" id="fs53">val chart_binomial : Chart<br /><br />Full name: Distributions.chart_binomial</div>
-<div class="tip" id="fs54">union case Distribution.Binomial: int * float -&gt; Distribution</div>
-<div class="tip" id="fs55">val chart_negative_binomial : Chart<br /><br />Full name: Distributions.chart_negative_binomial</div>
-<div class="tip" id="fs56">union case Distribution.NegativeBinomial: mean: float * r: float -&gt; Distribution</div>
-<div class="tip" id="fs57">val chart_poisson : Chart<br /><br />Full name: Distributions.chart_poisson</div>
-<div class="tip" id="fs58">union case Distribution.Poisson: mean: float -&gt; Distribution</div>
-<div class="tip" id="fs59">val chart_mixture : Chart<br /><br />Full name: Distributions.chart_mixture</div>
-<div class="tip" id="fs60">union case Distribution.Mixture: (float * Distribution) list -&gt; Distribution</div>
+<div class="tip" id="fs36">val chart_linear : Chart<br /><br />Full name: Distributions.chart_linear</div>
+<div class="tip" id="fs37">union case Distribution.Linear: lower_bound: float * upper_bound: float * density_at_lower_bound: float -&gt; Distribution</div>
+<div class="tip" id="fs38">val chart_normal : Chart<br /><br />Full name: Distributions.chart_normal</div>
+<div class="tip" id="fs39">union case Distribution.Normal: float * float -&gt; Distribution</div>
+<div class="tip" id="fs40">val chart_lognormal : Chart<br /><br />Full name: Distributions.chart_lognormal</div>
+<div class="tip" id="fs41">union case Distribution.LogNormal: float * float -&gt; Distribution</div>
+<div class="tip" id="fs42">val chart_exponential : Chart<br /><br />Full name: Distributions.chart_exponential</div>
+<div class="tip" id="fs43">union case Distribution.Exponential: mean: float -&gt; Distribution</div>
+<div class="tip" id="fs44">val chart_gamma : Chart<br /><br />Full name: Distributions.chart_gamma</div>
+<div class="tip" id="fs45">union case Distribution.Gamma: float * float -&gt; Distribution</div>
+<div class="tip" id="fs46">val discrete_chart : d:Distribution -&gt; Chart<br /><br />Full name: Distributions.discrete_chart</div>
+<div class="tip" id="fs47">val create : count:int -&gt; value:&#39;T -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Array.create</div>
+<div class="tip" id="fs48">Multiple items<br />val seq : sequence:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Core.Operators.seq<br /><br />--------------------<br />type seq&lt;&#39;T&gt; = System.Collections.Generic.IEnumerable&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.seq&lt;_&gt;</div>
+<div class="tip" id="fs49">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit<br /><br />Full name: Microsoft.FSharp.Collections.Seq.iter</div>
+<div class="tip" id="fs50">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />Full name: Microsoft.FSharp.Core.Operators.int<br /><br />--------------------<br />type int = int32<br /><br />Full name: Microsoft.FSharp.Core.int<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int<br /><br />Full name: Microsoft.FSharp.Core.int&lt;_&gt;</div>
+<div class="tip" id="fs51">val nan : float<br /><br />Full name: Microsoft.FSharp.Core.Operators.nan</div>
+<div class="tip" id="fs52">val mapi : mapping:(int -&gt; &#39;T -&gt; &#39;U) -&gt; array:&#39;T [] -&gt; &#39;U []<br /><br />Full name: Microsoft.FSharp.Collections.Array.mapi</div>
+<div class="tip" id="fs53">val chart_bernoulli : Chart<br /><br />Full name: Distributions.chart_bernoulli</div>
+<div class="tip" id="fs54">union case Distribution.Bernoulli: float -&gt; Distribution</div>
+<div class="tip" id="fs55">val chart_binomial : Chart<br /><br />Full name: Distributions.chart_binomial</div>
+<div class="tip" id="fs56">union case Distribution.Binomial: int * float -&gt; Distribution</div>
+<div class="tip" id="fs57">val chart_negative_binomial : Chart<br /><br />Full name: Distributions.chart_negative_binomial</div>
+<div class="tip" id="fs58">union case Distribution.NegativeBinomial: mean: float * r: float -&gt; Distribution</div>
+<div class="tip" id="fs59">val chart_poisson : Chart<br /><br />Full name: Distributions.chart_poisson</div>
+<div class="tip" id="fs60">union case Distribution.Poisson: mean: float -&gt; Distribution</div>
+<div class="tip" id="fs61">val chart_mixture : Chart<br /><br />Full name: Distributions.chart_mixture</div>
+<div class="tip" id="fs62">union case Distribution.Mixture: (float * Distribution) list -&gt; Distribution</div>
 
         </div>
         <div class="span3">
